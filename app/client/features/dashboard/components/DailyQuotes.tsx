@@ -44,7 +44,7 @@ export function DailyQuotes() {
         <blockquote>
           <p>"{quote?.quote}"</p>
         </blockquote>
-        <cite>— {quote?.author}</cite>
+        <cite>~ {quote?.author}</cite>
       </div>
     </div>
   );

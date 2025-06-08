@@ -4,7 +4,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ProductsPage from '~client/features/products/ProductPage'
 import DashboardPage from '~client/features/dashboard/DashboardPage'
-import { Sidebar } from '~client/components/layouts/Sidebar'
+import Sidebar from '~client/components/layouts/Sidebar'
 import { trpc, trpcClient } from '~client/trpc'
 import '~client/index.css'
 
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
 			<QueryClientProvider client={queryClient}>
 				<HashRouter>
 					<div>
-						<Sidebar />
+						<Sidebar isMobileOpen={false} toggleMobileSidebar={() => {}} />
 						<Routes>
 							<Route path="/dashboard" element={<DashboardPage />} />
 							<Route path="/products" element={<ProductsPage />} />
