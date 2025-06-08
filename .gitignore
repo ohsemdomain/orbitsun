@@ -26,3 +26,6 @@ dist-ssr
 .wrangler
 .dev.vars*
 wrangler.toml
+
+# TypeScript build cache
+*.tsbuildinfo

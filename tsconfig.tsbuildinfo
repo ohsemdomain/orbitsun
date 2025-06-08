@@ -1,1 +1,0 @@
-{"root":["./app/client/index.tsx","./app/client/trpc.ts","./app/client/vite-env.d.ts","./app/client/components/layouts/Sidebar.tsx","./app/client/components/layouts/Topbar.tsx","./app/client/features/dashboard/DashboardPage.tsx","./app/client/features/products/ProductPage.tsx","./app/server/index.ts","./app/server/trpc.ts"],"version":"5.8.3"}
