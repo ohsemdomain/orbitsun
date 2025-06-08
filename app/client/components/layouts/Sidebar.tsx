@@ -21,7 +21,7 @@ export default function Sidebar({
 			{isMobileOpen && (
 				<button
 					type="button"
-					className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+					className="fixed inset-0 bg-black/50 bg-opacity-50 z-30 lg:hidden"
 					onClick={toggleMobileSidebar}
 					aria-label="Close sidebar"
 				/>

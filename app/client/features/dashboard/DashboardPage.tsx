@@ -3,7 +3,7 @@ import './dashboard.css'
 
 export default function DashboardPage() {
 	return (
-		<div>
+		<div className="p-6">
 			<h1>Dashboard Page</h1>
 			<DailyQuotes />
 		</div>
