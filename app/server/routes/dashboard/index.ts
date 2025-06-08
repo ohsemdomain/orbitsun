@@ -1,12 +1,15 @@
-import { z } from 'zod';
-import { router, publicProcedure } from '~server/trpc';
+import { initTRPC } from '@trpc/server';
+import type { Context } from '~shared/types';
+
+const t = initTRPC.context<Context>().create();
+const router = t.router;
+const publicProcedure = t.procedure;
 
 export const dashboardRouter = router({
   hello: publicProcedure
-    .input(z.object({ name: z.string().optional() }))
-    .query(({ input }) => {
+    .query(() => {
       return {
-        greeting: `Hello ${input.name || 'World'}!`,
+        greeting: 'Hello World!',
       };
     }),
 });

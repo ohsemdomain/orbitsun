@@ -59,6 +59,26 @@ body {
             display: none;
         }
     }
+
+    .daily-quote-card {
+        @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6;
+    }
+
+    .quote-header h3 {
+        @apply text-lg font-semibold text-gray-800 mb-4;
+    }
+
+    .quote-content blockquote {
+        @apply mb-4;
+    }
+
+    .quote-content blockquote p {
+        @apply text-gray-700 text-base leading-relaxed italic;
+    }
+
+    .quote-content cite {
+        @apply text-sm text-gray-500 font-medium;
+    }
 }
 
 @layer utility {
