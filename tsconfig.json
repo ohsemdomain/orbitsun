@@ -24,11 +24,11 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
-        "./src/*"
+      "@client/*": [
+        "./app/client/*"
       ],
-      "@worker/*": [
-        "./worker/*"
+      "@server/*": [
+        "./app/server/*"
       ]
     },
     "types": [
@@ -37,8 +37,8 @@
     ]
   },
   "include": [
-    "src/**/*",
-    "worker/**/*"
+    "app/client/**/*",
+    "app/server/**/*"
   ],
   "exclude": [
     "node_modules",

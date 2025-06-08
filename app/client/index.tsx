@@ -1,10 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
-import ProductsPage from '@src/features/products/ProductPage'
-import DashboardPage from '@src/features/dashboard/DashboardPage'
-import { Sidebar } from '@src/components/layouts/Sidebar'
-import '@src/index.css'
+import ProductsPage from '@client/features/products/ProductPage'
+import DashboardPage from '@client/features/dashboard/DashboardPage'
+import { Sidebar } from '@client/components/layouts/Sidebar'
+import '@client/index.css'
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

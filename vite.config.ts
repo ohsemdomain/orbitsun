@@ -13,8 +13,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@src': path.resolve(__dirname, './src'),
-      '@worker': path.resolve(__dirname, './worker')
+      '@client': path.resolve(__dirname, './app/client'),
+      '@server': path.resolve(__dirname, './app/server')
     },
   },
 })
