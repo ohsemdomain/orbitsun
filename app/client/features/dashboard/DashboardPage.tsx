@@ -1,13 +1,14 @@
+import { trpc } from '~client/trpc'
 import { useState } from 'react'
-import { trpc } from '@client/trpc'
 
 export default function DashboardPage() {
 	const [userName, setUserName] = useState('')
-	
-	const { data: helloData, refetch: refetchHello } = trpc.dashboard.hello.useQuery(
-		{ name: userName || undefined },
-		{ enabled: false }
-	)
+
+	const { data: helloData, refetch: refetchHello } =
+		trpc.dashboard.hello.useQuery(
+			userName ? { name: userName } : {},
+			{ enabled: false },
+		)
 
 	return (
 		<div>
@@ -30,7 +31,7 @@ export default function DashboardPage() {
 						Get Greeting
 					</button>
 				</div>
-				
+
 				{helloData && (
 					<p className="mb-4">
 						<strong>Greeting:</strong> {helloData.greeting}

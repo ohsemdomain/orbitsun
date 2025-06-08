@@ -1,7 +1,7 @@
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { appRouter } from './trpc';
-import type { Env, Context } from '../shared/types';
-import { API_ENDPOINTS } from '../shared/constants';
+import { appRouter } from '~server/trpc';
+import type { Env, Context } from '~shared/types';
+import { API_ENDPOINTS } from '~shared/constants';
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {

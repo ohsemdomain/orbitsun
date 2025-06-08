@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server';
-import type { Context } from '../shared/types';
-import { dashboardRouter } from './routes/dashboard';
+import type { Context } from '~shared/types';
+import { dashboardRouter } from '~server/routes/dashboard';
 
 const t = initTRPC.context<Context>().create();
 

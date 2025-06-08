@@ -24,11 +24,14 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@client/*": [
+      "~client/*": [
         "./app/client/*"
       ],
-      "@server/*": [
+      "~server/*": [
         "./app/server/*"
+      ],
+      "~shared/*": [
+        "./app/shared/*"
       ]
     },
     "types": [
@@ -38,7 +41,8 @@
   },
   "include": [
     "app/client/**/*",
-    "app/server/**/*"
+    "app/server/**/*",
+    "app/shared/**/*"
   ],
   "exclude": [
     "node_modules",

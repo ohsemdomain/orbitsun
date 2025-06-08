@@ -2,11 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import ProductsPage from '@client/features/products/ProductPage'
-import DashboardPage from '@client/features/dashboard/DashboardPage'
-import { Sidebar } from '@client/components/layouts/Sidebar'
-import { trpc, trpcClient } from '@client/trpc'
-import '@client/index.css'
+import ProductsPage from '~client/features/products/ProductPage'
+import DashboardPage from '~client/features/dashboard/DashboardPage'
+import { Sidebar } from '~client/components/layouts/Sidebar'
+import { trpc, trpcClient } from '~client/trpc'
+import '~client/index.css'
 
 const queryClient = new QueryClient()
 

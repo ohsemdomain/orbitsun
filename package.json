@@ -7,8 +7,6 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "bunx @biomejs/biome lint .",
-    "format": "bunx @biomejs/biome format --write .",
-    "check": "bunx @biomejs/biome check --write .",
     "ts": "bun run tsc --noEmit",
     "deploy": "bun run build && wrangler deploy"
   },
