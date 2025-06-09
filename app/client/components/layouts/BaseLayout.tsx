@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
 
@@ -10,13 +11,19 @@ export default function BaseLayout({
 	children,
 	className = '',
 }: BaseLayoutProps) {
+	const [isMobileOpen, setIsMobileOpen] = useState(false)
+
+	const toggleMobileSidebar = () => {
+		setIsMobileOpen(!isMobileOpen)
+	}
+
 	return (
 		<div className="flex h-screen bg-gray-100">
-			<Sidebar />
+			<Sidebar isMobileOpen={isMobileOpen} toggleMobileSidebar={toggleMobileSidebar} />
 			
 			{/* Main content area */}
-			<div className="flex-1 flex flex-col overflow-hidden">
-				<Topbar />
+			<div className="flex-1 flex flex-col overflow-hidden lg:ml-64">
+				<Topbar toggleMobileSidebar={toggleMobileSidebar} />
 				
 				{/* Page content */}
 				<main className={`flex-1 overflow-auto scrollbar-modern ${className}`}>

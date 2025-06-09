@@ -1,14 +1,15 @@
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { XIcon, MenuIcon } from '~client/assets/Icons'
+import { XIcon } from '~client/assets/Icons'
 
-export default function Sidebar() {
-	const [isMobileOpen, setIsMobileOpen] = useState(false)
-	
-	const toggleMobileSidebar = () => {
-		setIsMobileOpen(!isMobileOpen)
-	}
+interface SidebarProps {
+	isMobileOpen: boolean
+	toggleMobileSidebar: () => void
+}
 
+export default function Sidebar({ 
+	isMobileOpen, 
+	toggleMobileSidebar 
+}: SidebarProps) {
 	const navItems = [
 		{ to: '/dashboard', label: 'Dashboard', end: true },
 		{ to: '/products', label: 'Products' },
@@ -16,17 +17,6 @@ export default function Sidebar() {
 
 	return (
 		<>
-			{/* Mobile menu button */}
-			<div className="lg:hidden bg-white border-b border-gray-200 px-4 py-2">
-				<button
-					type="button"
-					onClick={toggleMobileSidebar}
-					className="text-gray-500 hover:text-gray-700"
-				>
-					<MenuIcon className="w-6 h-6" />
-				</button>
-			</div>
-
 			{/* Mobile backdrop */}
 			{isMobileOpen && (
 				<button
