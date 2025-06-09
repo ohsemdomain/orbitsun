@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+/* @reference "tailwindcss";
 
 @layer components {
     .daily-quote-card {
@@ -20,4 +20,4 @@
     .quote-content cite {
         @apply text-sm text-gray-500 font-medium;
     }
-}
+} */
