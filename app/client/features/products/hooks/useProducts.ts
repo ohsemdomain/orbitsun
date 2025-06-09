@@ -22,8 +22,7 @@ export const useProducts = () => {
 						price: 99.99,
 						description: 'High-quality wireless headphones with noise cancellation',
 						category: 'Electronics',
-						inStock: true,
-						sku: 'WH-001'
+						status: 'active'
 					},
 					{
 						id: '2',
@@ -31,8 +30,7 @@ export const useProducts = () => {
 						price: 249.99,
 						description: 'Feature-rich smartwatch with health monitoring',
 						category: 'Electronics',
-						inStock: true,
-						sku: 'SW-002'
+						status: 'active'
 					},
 					{
 						id: '3',
@@ -40,8 +38,7 @@ export const useProducts = () => {
 						price: 79.99,
 						description: 'Programmable coffee maker with thermal carafe',
 						category: 'Appliances',
-						inStock: false,
-						sku: 'CM-003'
+						status: 'inactive'
 					},
 					{
 						id: '4',
@@ -49,8 +46,7 @@ export const useProducts = () => {
 						price: 129.99,
 						description: 'Lightweight running shoes with advanced cushioning',
 						category: 'Sports',
-						inStock: true,
-						sku: 'RS-004'
+						status: 'active'
 					},
 					{
 						id: '5',
@@ -58,8 +54,7 @@ export const useProducts = () => {
 						price: 39.99,
 						description: 'LED desk lamp with adjustable brightness',
 						category: 'Office',
-						inStock: true,
-						sku: 'DL-005'
+						status: 'active'
 					},
 					{
 						id: '6',
@@ -67,8 +62,7 @@ export const useProducts = () => {
 						price: 29.99,
 						description: 'Non-slip yoga mat with extra cushioning',
 						category: 'Sports',
-						inStock: true,
-						sku: 'YM-006'
+						status: 'active'
 					},
 					{
 						id: '7',
@@ -76,8 +70,7 @@ export const useProducts = () => {
 						price: 59.99,
 						description: 'Portable bluetooth speaker with 360° sound',
 						category: 'Electronics',
-						inStock: false,
-						sku: 'BS-007'
+						status: 'inactive'
 					},
 					{
 						id: '8',
@@ -85,8 +78,7 @@ export const useProducts = () => {
 						price: 19.99,
 						description: 'Insulated stainless steel water bottle',
 						category: 'Sports',
-						inStock: true,
-						sku: 'WB-008'
+						status: 'active'
 					}
 				]
 				

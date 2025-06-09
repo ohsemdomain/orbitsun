@@ -23,6 +23,5 @@ export interface Product {
   price: number;
   description: string;
   category: string;
-  inStock: boolean;
-  sku: string;
+  status: 'active' | 'inactive';
 }

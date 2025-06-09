@@ -75,8 +75,8 @@ const ProductsPage: React.FC = () => {
 	)
 
 	const renderDetail = useCallback(
-		(product: Product) => <ProductDetail product={product} onEdit={handleEditProduct} />,
-		[handleEditProduct],
+		(product: Product) => <ProductDetail product={product} />,
+		[],
 	)
 
 	const itemKeyExtractor = useCallback((product: Product) => product.id, [])

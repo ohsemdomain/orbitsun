@@ -29,12 +29,12 @@ const ProductListItem: React.FC<ProductListItemProps> = ({
 						</span>
 						<span
 							className={`text-xs px-2 py-1 rounded-full ${
-								product.inStock
+								product.status === 'active'
 									? 'bg-green-100 text-green-800'
-									: 'bg-red-100 text-red-800'
+									: 'bg-gray-100 text-gray-800'
 							}`}
 						>
-							{product.inStock ? 'In Stock' : 'Out of Stock'}
+							{product.status === 'active' ? 'Active' : 'Inactive'}
 						</span>
 					</div>
 				</div>
