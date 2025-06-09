@@ -50,7 +50,7 @@ export default function DetailPanel<T extends Identifiable>({
 			</header>
 
 			{/* Content */}
-			<div className="p-6 overflow-y-auto flex-grow">
+			<div className="p-6 overflow-y-auto flex-grow scrollbar-modern">
 				{isLoading ? (
 					<div className="flex h-full w-full items-center justify-center">
 						<Spinner />

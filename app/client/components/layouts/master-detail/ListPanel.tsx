@@ -30,7 +30,7 @@ export default function ListPanel<T extends Identifiable>({
 					No items available.
 				</div>
 			) : (
-				<ul className="overflow-y-auto flex-grow">
+				<ul className="overflow-y-auto flex-grow scrollbar-modern">
 					{items.map((item: T) =>
 						renderListItem(
 							item,

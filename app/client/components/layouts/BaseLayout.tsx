@@ -38,7 +38,7 @@ export default function BaseLayout({
 				<Topbar />
 				
 				{/* Page content */}
-				<main className={`flex-1 overflow-auto ${className}`}>
+				<main className={`flex-1 overflow-auto scrollbar-modern ${className}`}>
 					{children}
 				</main>
 			</div>

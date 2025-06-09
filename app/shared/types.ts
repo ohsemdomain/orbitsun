@@ -16,3 +16,13 @@ export interface Context {
   env: Env;
   request: Request;
 }
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  inStock: boolean;
+  sku: string;
+}
