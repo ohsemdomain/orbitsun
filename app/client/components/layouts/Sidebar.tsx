@@ -68,10 +68,6 @@ export default function Sidebar({
 						</NavLink>
 					))}
 				</nav>
-
-				<div className="mt-auto text-center text-xs text-gray-500">
-					Version 1.0.1
-				</div>
 			</aside>
 		</>
 	)

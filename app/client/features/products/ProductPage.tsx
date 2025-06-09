@@ -19,7 +19,7 @@ const products: Product[] = [
 		description: 'High-quality wireless headphones with noise cancellation',
 		category: 'Electronics',
 		inStock: true,
-		sku: 'WH-001'
+		sku: 'WH-001',
 	},
 	{
 		id: '2',
@@ -28,7 +28,7 @@ const products: Product[] = [
 		description: 'Feature-rich smartwatch with health monitoring',
 		category: 'Electronics',
 		inStock: true,
-		sku: 'SW-002'
+		sku: 'SW-002',
 	},
 	{
 		id: '3',
@@ -37,7 +37,7 @@ const products: Product[] = [
 		description: 'Programmable coffee maker with thermal carafe',
 		category: 'Appliances',
 		inStock: false,
-		sku: 'CM-003'
+		sku: 'CM-003',
 	},
 	{
 		id: '4',
@@ -46,7 +46,7 @@ const products: Product[] = [
 		description: 'Lightweight running shoes with advanced cushioning',
 		category: 'Sports',
 		inStock: true,
-		sku: 'RS-004'
+		sku: 'RS-004',
 	},
 	{
 		id: '5',
@@ -55,14 +55,45 @@ const products: Product[] = [
 		description: 'LED desk lamp with adjustable brightness',
 		category: 'Office',
 		inStock: true,
-		sku: 'DL-005'
-	}
+		sku: 'DL-005',
+	},
+	{
+		id: '6',
+		name: 'Coffee Maker',
+		price: 79.99,
+		description: 'Programmable coffee maker with thermal carafe',
+		category: 'Appliances',
+		inStock: false,
+		sku: 'CM-003',
+	},
+	{
+		id: '7',
+		name: 'Running Shoes',
+		price: 129.99,
+		description: 'Lightweight running shoes with advanced cushioning',
+		category: 'Sports',
+		inStock: true,
+		sku: 'RS-004',
+	},
+	{
+		id: '8',
+		name: 'Desk Lamp',
+		price: 39.99,
+		description: 'LED desk lamp with adjustable brightness',
+		category: 'Office',
+		inStock: true,
+		sku: 'DL-005',
+	},
 ]
 
 export default function ProductsPage() {
 	const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
-	const renderListItem = (product: Product, isSelected: boolean, onSelect: () => void) => (
+	const renderListItem = (
+		product: Product,
+		isSelected: boolean,
+		onSelect: () => void,
+	) => (
 		<li
 			key={product.id}
 			className={`p-4 cursor-pointer border-b border-gray-200 hover:bg-gray-50 ${
@@ -75,12 +106,16 @@ export default function ProductsPage() {
 					<h3 className="font-medium text-gray-900">{product.name}</h3>
 					<p className="text-sm text-gray-600 mt-1">{product.category}</p>
 					<div className="flex items-center mt-2 space-x-4">
-						<span className="text-lg font-semibold text-green-600">${product.price}</span>
-						<span className={`text-xs px-2 py-1 rounded-full ${
-							product.inStock 
-								? 'bg-green-100 text-green-800' 
-								: 'bg-red-100 text-red-800'
-						}`}>
+						<span className="text-lg font-semibold text-green-600">
+							${product.price}
+						</span>
+						<span
+							className={`text-xs px-2 py-1 rounded-full ${
+								product.inStock
+									? 'bg-green-100 text-green-800'
+									: 'bg-red-100 text-red-800'
+							}`}
+						>
 							{product.inStock ? 'In Stock' : 'Out of Stock'}
 						</span>
 					</div>
@@ -100,21 +135,25 @@ export default function ProductsPage() {
 				<div className="space-y-4">
 					<div>
 						<h3 className="text-sm font-medium text-gray-700">Price</h3>
-						<p className="text-3xl font-bold text-green-600">${product.price}</p>
+						<p className="text-3xl font-bold text-green-600">
+							${product.price}
+						</p>
 					</div>
-					
+
 					<div>
 						<h3 className="text-sm font-medium text-gray-700">Category</h3>
 						<p className="text-lg text-gray-900">{product.category}</p>
 					</div>
-					
+
 					<div>
 						<h3 className="text-sm font-medium text-gray-700">Availability</h3>
-						<span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-							product.inStock 
-								? 'bg-green-100 text-green-800' 
-								: 'bg-red-100 text-red-800'
-						}`}>
+						<span
+							className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+								product.inStock
+									? 'bg-green-100 text-green-800'
+									: 'bg-red-100 text-red-800'
+							}`}
+						>
 							{product.inStock ? 'In Stock' : 'Out of Stock'}
 						</span>
 					</div>
@@ -123,14 +162,17 @@ export default function ProductsPage() {
 				<div className="space-y-4">
 					<div>
 						<h3 className="text-sm font-medium text-gray-700">Description</h3>
-						<p className="text-gray-900 leading-relaxed">{product.description}</p>
+						<p className="text-gray-900 leading-relaxed">
+							{product.description}
+						</p>
 					</div>
 				</div>
 			</div>
 
 			<div className="border-t border-gray-200 pt-6">
 				<div className="flex space-x-3">
-					<button 
+					<button
+					type='button'
 						className={`flex-1 py-2 px-4 rounded-md font-medium ${
 							product.inStock
 								? 'bg-blue-600 text-white hover:bg-blue-700'
@@ -140,7 +182,8 @@ export default function ProductsPage() {
 					>
 						Add to Cart
 					</button>
-					<button className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+					<button type='button'
+					className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
 						Edit Product
 					</button>
 				</div>
