@@ -2,7 +2,7 @@ import type React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Product } from '~shared/types'
-import MasterDetailLayout from '~client/components/layouts/master-detail/MasterDetailLayout'
+import MasterLayout from '~client/components/layouts/MasterLayout'
 import ProductDetail from './components/ProductDetail'
 import ProductListItem from './components/ProductListItem'
 import { useProducts } from './hooks/useProducts'
@@ -158,7 +158,7 @@ const ProductsPage: React.FC = () => {
 				</svg>
 			</button>
 
-			<MasterDetailLayout<Product>
+			<MasterLayout<Product>
 				items={products || []}
 				selectedItem={selectedProduct}
 				onSelectItem={handleSelectProduct}
