@@ -53,7 +53,7 @@ export function SearchInput({ className = '' }: SearchInputProps) {
 				value={searchTerm}
 				onChange={(e) => handleSearch(e.target.value)}
 				placeholder={getPlaceholder()}
-				className="block w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-md bg-gray-50 text-sm focus:bg-white focus:border-primary-500"
+				className="block w-full pl-10 pr-10 py-2.5 border border-neutral-300 rounded-md bg-neutral-50 text-sm focus:bg-white"
 			/>
 
 			{searchTerm && (

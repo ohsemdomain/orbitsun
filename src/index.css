@@ -33,6 +33,16 @@
   h6 {
     font-size: 1rem;
   }
+
+  input,
+  textarea,
+  button {
+    @apply focus:outline-none;
+  }
+
+  input {
+    @apply focus:border-primary-400;
+  }
 }
 
 @theme {

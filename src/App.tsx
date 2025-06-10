@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Ticket, Settings, Menu, X, Target } from 'lucide-react';
+import { LayoutDashboard, ScanBarcode, Contact, Settings, Menu, X, Target } from 'lucide-react';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
@@ -17,8 +17,8 @@ interface NavItem {
 const App: FC = () => {
 	const navItems: NavItem[] = [
 		{ icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
-		{ icon: Users, label: 'Items', path: '/items' },
-		{ icon: Ticket, label: 'Contacts', path: '/contacts' },
+		{ icon: ScanBarcode, label: 'Items', path: '/items' },
+		{ icon: Contact, label: 'Contacts', path: '/contacts' },
 		{ icon: Settings, label: 'Settings', path: '/settings' },
 	];
 
@@ -93,7 +93,7 @@ const App: FC = () => {
 
 			<div className="flex-1 flex flex-col">
 				{/* Topbar */}
-				<header className="flex items-center justify-between h-16 px-6 bg-white border-b">
+				<header className="flex items-center justify-between h-16 px-6 bg-neutral-100 border-b border-neutral-200">
 					<div className="flex items-center flex-1 max-w-md gap-4">
 						{/* Mobile trigger */}
 						<button
@@ -116,7 +116,7 @@ const App: FC = () => {
 					{/* User Profile Section */}
 					<div className="flex items-center gap-3 ml-4">
 						{/* Username */}
-						<span className="text-sm font-medium text-gray-700">John Doe</span>
+						<span className="text-sm font-medium text-gray-500">John Doe</span>
 
 						{/* Logout Button */}
 						<button
@@ -124,7 +124,7 @@ const App: FC = () => {
 							onClick={() => {
 								console.log('Logging out...');
 							}}
-							className="ml-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-md transition-colors duration-200"
+							className="ml-2 px-4 py-2 text-sm font-medium text-gray-400 bg-neutral-200 rounded-md transition-colors duration-200"
 						>
 							Logout
 						</button>
