@@ -113,7 +113,7 @@ const App: FC = () => {
 						<button
 							title="Side navigation"
 							type="button"
-							className="lg:hidden p-2 text-white bg-primary-900 rounded-md transition-colors"
+							className="lg:hidden p-2 text-white bg-primary-500 rounded transition-colors"
 							aria-haspopup="menu"
 							aria-label="Side navigation"
 							aria-expanded={isSideNavOpen}
@@ -138,16 +138,16 @@ const App: FC = () => {
 							onClick={() => {
 								console.log('Logging out...');
 							}}
-							className="ml-2 px-4 py-2 text-sm font-medium text-gray-400 bg-neutral-200 rounded-md transition-colors duration-200"
+							className="inline-flex items-center justify-center h-9 gap-2 px-6 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 focus:border-primary-700 focus:text-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:text-primary-300 disabled:shadow-none"
 						>
-							Logout
+							<span>Signout</span>
 						</button>
 					</div>
 				</header>
 
 				{/* Main Area */}
-				<main className="flex-1 overflow-y-auto">
-					<div className="min-h-full">
+				<main className="flex-1 overflow-hidden">
+					<div className="h-full">
 						<Routes>
 							<Route path="/" element={<Navigate to="/dashboard" replace />} />
 							<Route path="/dashboard" element={<DashboardPage />} />
