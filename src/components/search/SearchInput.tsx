@@ -1,35 +1,46 @@
-import { useRef, useEffect } from "react";
-import { SearchIcon, XIcon } from "lucide-react";
-import { useSearch } from "./SearchProvider";
+// src/components/search/SearchInput.tsx
+import { useRef, useEffect } from 'react';
+import { SearchIcon, XIcon } from 'lucide-react';
+import { useSearch } from './SearchProvider';
+import { useLocation } from 'react-router-dom';
 
 interface SearchInputProps {
 	className?: string;
-	placeholder?: string;
 }
 
-export function SearchInput({ 
-	className = "",
-	placeholder = "Search..."
-}: SearchInputProps) {
+export function SearchInput({ className = '' }: SearchInputProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { searchTerm, handleSearch, clearSearch } = useSearch();
+	const location = useLocation();
+
+	// Auto-generate placeholder from pathname with proper capitalization
+	const getPlaceholder = () => {
+		if (location.pathname === '/' || location.pathname === '/dashboard') {
+			return 'Search ( / )';
+		}
+
+		// Extract route name and capitalize first letter
+		const routeName = location.pathname.slice(1);
+		const capitalizedRoute = routeName.charAt(0).toUpperCase() + routeName.slice(1);
+		return `Search in ${capitalizedRoute} ( / )`;
+	};
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			// Cmd/Ctrl + K to focus search
-			if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+			// Forward slash to focus search
+			if (e.key === '/' && document.activeElement !== inputRef.current) {
 				e.preventDefault();
 				inputRef.current?.focus();
 			}
 			// Escape to clear search
-			if (e.key === "Escape" && document.activeElement === inputRef.current) {
+			if (e.key === 'Escape' && document.activeElement === inputRef.current) {
 				clearSearch();
 				inputRef.current?.blur();
 			}
 		};
 
-		document.addEventListener("keydown", handleKeyDown);
-		return () => document.removeEventListener("keydown", handleKeyDown);
+		document.addEventListener('keydown', handleKeyDown);
+		return () => document.removeEventListener('keydown', handleKeyDown);
 	}, [clearSearch]);
 
 	return (
@@ -41,7 +52,7 @@ export function SearchInput({
 				type="text"
 				value={searchTerm}
 				onChange={(e) => handleSearch(e.target.value)}
-				placeholder={placeholder}
+				placeholder={getPlaceholder()}
 				className="block w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:bg-white focus:border-primary-500"
 			/>
 
