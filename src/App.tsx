@@ -1,10 +1,22 @@
-import { LayoutDashboard, ScanBarcode, Contact, Settings, Menu, X, Target } from 'lucide-react';
+import {
+	LayoutDashboard,
+	ScanBarcode,
+	BanknoteArrowDown,
+	BanknoteArrowUp,
+	Contact,
+	Settings,
+	Menu,
+	X,
+	Target,
+} from 'lucide-react';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import { SearchInput } from './components/search/SearchInput';
 import DashboardPage from './features/dashboard/DashboardPage';
 import ItemsPage from './features/items/ItemsPage';
+import InvoicesPage from './features/invoices/InvoicesPage';
+import PurchasesPage from './features/purchases/PurchasesPage';
 import ContactsPage from './features/contacts/ContactsPage';
 import SettingsPage from './features/settings/SettingsPage';
 
@@ -19,6 +31,8 @@ const App: FC = () => {
 		{ icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
 		{ icon: ScanBarcode, label: 'Items', path: '/items' },
 		{ icon: Contact, label: 'Contacts', path: '/contacts' },
+		{ icon: BanknoteArrowUp, label: 'Invoices', path: '/invoices' },
+		{ icon: BanknoteArrowDown, label: 'Purchases', path: '/purchases' },
 		{ icon: Settings, label: 'Settings', path: '/settings' },
 	];
 
@@ -59,7 +73,7 @@ const App: FC = () => {
 	);
 
 	return (
-		<div className="flex h-screen relative">
+		<div className="flex h-screen relative font-roboto">
 			{/* Desktop Sidebar */}
 			<aside className="hidden lg:flex flex-col w-64 h-screen px-4 py-8 bg-gray-900">
 				<NavContent />
@@ -93,13 +107,13 @@ const App: FC = () => {
 
 			<div className="flex-1 flex flex-col">
 				{/* Topbar */}
-				<header className="flex items-center justify-between h-16 px-6 bg-neutral-100 border-b border-neutral-200">
+				<header className="flex items-center justify-between h-16 px-2 lg:px-6 bg-neutral-100 border-b border-neutral-200">
 					<div className="flex items-center flex-1 max-w-md gap-4">
 						{/* Mobile trigger */}
 						<button
 							title="Side navigation"
 							type="button"
-							className="lg:hidden p-2 rounded-md transition-colors"
+							className="lg:hidden p-2 text-white bg-primary-900 rounded-md transition-colors"
 							aria-haspopup="menu"
 							aria-label="Side navigation"
 							aria-expanded={isSideNavOpen}
@@ -132,14 +146,18 @@ const App: FC = () => {
 				</header>
 
 				{/* Main Area */}
-				<main className="flex-1 overflow-auto">
-					<Routes>
-						<Route path="/" element={<Navigate to="/dashboard" replace />} />
-						<Route path="/dashboard" element={<DashboardPage />} />
-						<Route path="/items" element={<ItemsPage />} />
-						<Route path="/contacts" element={<ContactsPage />} />
-						<Route path="/settings" element={<SettingsPage />} />
-					</Routes>
+				<main className="flex-1 overflow-y-auto">
+					<div className="min-h-full">
+						<Routes>
+							<Route path="/" element={<Navigate to="/dashboard" replace />} />
+							<Route path="/dashboard" element={<DashboardPage />} />
+							<Route path="/items" element={<ItemsPage />} />
+							<Route path="/contacts" element={<ContactsPage />} />
+							<Route path="/invoices" element={<InvoicesPage />} />
+							<Route path="/purchases" element={<PurchasesPage />} />
+							<Route path="/settings" element={<SettingsPage />} />
+						</Routes>
+					</div>
 				</main>
 			</div>
 		</div>
