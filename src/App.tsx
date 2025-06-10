@@ -58,7 +58,7 @@ const App: FC = () => {
 							className={({ isActive }) =>
 								`flex items-center px-4 py-2 ${index > 0 ? 'mt-2' : ''} ${
 									isActive
-										? 'text-white bg-blue-500 rounded-md'
+										? 'text-white bg-blue-500 rounded'
 										: 'text-white transition-colors duration-300 transform'
 								}`
 							}
@@ -123,7 +123,7 @@ const App: FC = () => {
 							{isSideNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
 						</button>
 						{/* Search */}
-						<div className="hidden lg:block lg:min-w-[350px]">
+						<div className="hidden lg:block lg:min-w-[450px]">
 							<SearchInput />
 						</div>
 					</div>
@@ -138,7 +138,7 @@ const App: FC = () => {
 							onClick={() => {
 								console.log('Logging out...');
 							}}
-							className="inline-flex items-center justify-center h-9 gap-2 px-6 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 focus:border-primary-700 focus:text-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:text-primary-300 disabled:shadow-none"
+							className="inline-flex items-center justify-center h-8 gap-2 px-6 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 focus:border-primary-700 focus:text-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:text-primary-300 disabled:shadow-none"
 						>
 							<span>Signout</span>
 						</button>

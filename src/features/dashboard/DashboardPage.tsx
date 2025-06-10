@@ -7,7 +7,7 @@ const DashboardPage: FC = () => {
 	return (
 		<div className="h-full flex flex-col">
 			{/* Sticky Header */}
-			<div className="flex-shrink-0 bg-gradient-to-b from-blue-50 to-white z-10 px-2 lg:px-6 py-4">
+			<div className="flex-shrink-0 bg-gradient-to-b from-blue-50 to-white z-10 px-4 lg:px-6 py-4">
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 					{/* Left side - Title and description */}
 					<div>
@@ -19,13 +19,13 @@ const DashboardPage: FC = () => {
 					<div className="flex items-center gap-2 flex-wrap">
 						<button
 							type="button"
-							className="inline-flex items-center justify-center h-9 gap-2 px-4 sm:px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-primary-500 hover:bg-primary-600 focus:bg-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
+							className="inline-flex items-center justify-center h-9 gap-2 px-4 sm:px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-primary-500 focus:bg-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
 						>
 							<span>Announcements</span>
 						</button>
 						<button
 							type="button"
-							className="inline-flex items-center justify-center h-9 gap-2 px-4 sm:px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-primary-500 hover:bg-primary-600 focus:bg-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
+							className="inline-flex items-center justify-center h-9 gap-2 px-4 sm:px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-primary-500 focus:bg-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:bg-primary-300 disabled:shadow-none"
 						>
 							<span>Tutorial</span>
 						</button>
@@ -70,17 +70,16 @@ const DashboardPage: FC = () => {
 							</p>
 						</div>
 
-						<div className="bg-white p-4 rounded-md border border-neutral-300">
-							<p className="text-sm text-gray-600">Active Items</p>
+						<div className="bg-red-50 p-4 rounded-md border border-red-300">
+							<p className="text-sm text-red-600">Pending Order</p>
 							<p className="font-geist text-2xl font-semibold mt-1">89</p>
-							<p className="text-xs text-gray-600 mt-2">No change</p>
 						</div>
 					</div>
 
 					{/* Medium Cards */}
 					<div className="mb-4 grid grid-cols-1 lg:grid-cols-2 gap-4">
 						<div className="bg-white p-4 rounded-md border border-neutral-300">
-							<h3 className="font-semibold mb-3">Recent Activity</h3>
+							<h3 className="font-semibold mb-3">Sales Stats</h3>
 							<div className="space-y-3">
 								<div className="flex justify-between items-center">
 									<span className="text-sm">New user registered</span>
@@ -106,7 +105,7 @@ const DashboardPage: FC = () => {
 						</div>
 
 						<div className="bg-white p-4 rounded-md border border-neutral-300">
-							<h3 className="font-semibold mb-3">Quick Stats</h3>
+							<h3 className="font-semibold mb-3">Customers Service Stats</h3>
 							<div className="space-y-3">
 								<div className="flex justify-between items-center">
 									<span className="text-sm">Conversion Rate</span>
@@ -117,8 +116,8 @@ const DashboardPage: FC = () => {
 									<span className="font-geist text-sm font-semibold">RM27.50</span>
 								</div>
 								<div className="flex justify-between items-center">
-									<span className="text-sm">Total Products</span>
-									<span className="font-geist text-sm font-semibold">156</span>
+									<span className="text-sm">Avg. Reply Time</span>
+									<span className="font-geist text-sm font-semibold">7 Minutes</span>
 								</div>
 							</div>
 						</div>
