@@ -109,7 +109,7 @@ const RandomText: FC = () => {
 		return text;
 	};
 
-	const randomText = generateRandomText(300);
+	const randomText = generateRandomText(2000);
 
 	return (
 		<div>

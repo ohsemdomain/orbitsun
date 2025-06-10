@@ -71,7 +71,7 @@ const DashboardPage: FC = () => {
 						</div>
 
 						<div className="bg-red-50 p-4 rounded-md border border-red-300">
-							<p className="text-sm text-red-600">Pending Order</p>
+							<p className="text-sm text-gray-600">Pending Order</p>
 							<p className="font-geist text-2xl font-semibold mt-1">89</p>
 						</div>
 					</div>

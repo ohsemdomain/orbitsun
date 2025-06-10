@@ -8,12 +8,14 @@ import {
 	Menu,
 	X,
 	Target,
+	AlarmClockCheck,
 } from 'lucide-react';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import { SearchInput } from './components/search/SearchInput';
 import DashboardPage from './features/dashboard/DashboardPage';
+import TasksPage from './features/tasks/TasksPage';
 import ItemsPage from './features/items/ItemsPage';
 import InvoicesPage from './features/invoices/InvoicesPage';
 import PurchasesPage from './features/purchases/PurchasesPage';
@@ -29,6 +31,7 @@ interface NavItem {
 const App: FC = () => {
 	const navItems: NavItem[] = [
 		{ icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+		{ icon: AlarmClockCheck, label: 'Tasks', path: '/tasks' },
 		{ icon: ScanBarcode, label: 'Items', path: '/items' },
 		{ icon: Contact, label: 'Contacts', path: '/contacts' },
 		{ icon: BanknoteArrowUp, label: 'Invoices', path: '/invoices' },
@@ -151,6 +154,7 @@ const App: FC = () => {
 						<Routes>
 							<Route path="/" element={<Navigate to="/dashboard" replace />} />
 							<Route path="/dashboard" element={<DashboardPage />} />
+							<Route path="/tasks" element={<TasksPage />} />
 							<Route path="/items" element={<ItemsPage />} />
 							<Route path="/contacts" element={<ContactsPage />} />
 							<Route path="/invoices" element={<InvoicesPage />} />
