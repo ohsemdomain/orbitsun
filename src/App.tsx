@@ -22,12 +22,11 @@ const App: FC = () => {
 
 	return (
 		<div className="flex h-screen">
-			{/* Sidebar */}
-			<aside className="flex flex-col w-64 h-screen px-4 py-8 bg-white border-r dark:bg-gray-900 dark:border-gray-700">
+			<aside className="flex flex-col w-64 h-screen px-4 py-8 bg-gray-900">
 				<NavLink to="/" className="mb-8">
 					<div className="mr-6 flex items-center space-x-2">
-						<Waves className="h-6 w-6 text-primary" />
-						<span className="hidden font-bold sm:inline-block font-headline">Orbitsun</span>
+						<Waves className="h-5 w-5 text-blue-500" />
+						<span className="text-blue-500 hidden font-bold sm:inline-block font-headline">ORBITSUN</span>
 					</div>
 				</NavLink>
 
@@ -41,8 +40,8 @@ const App: FC = () => {
 								className={({ isActive }) =>
 									`flex items-center px-4 py-2 ${index > 0 ? 'mt-5' : ''} ${
 										isActive
-											? 'text-gray-700 bg-gray-100 rounded-md'
-											: 'transition-colors duration-300 transform hover:bg-gray-100 hover:text-gray-700'
+											? 'text-white bg-blue-500 rounded-md'
+											: 'text-white transition-colors duration-300 transform hover:bg-gray-100 hover:text-gray-700'
 									}`
 								}
 							>
@@ -54,11 +53,9 @@ const App: FC = () => {
 				</nav>
 			</aside>
 
-			{/* Main content area */}
 			<div className="flex-1 flex flex-col">
 				{/* Topbar */}
 				<header className="flex items-center justify-between h-16 px-6 bg-white border-b">
-					{/* Left side */}
 					<div className="flex items-center flex-1 max-w-md">
 						<div className="relative w-full">
 							<input
@@ -69,8 +66,6 @@ const App: FC = () => {
 							/>
 						</div>
 					</div>
-
-					{/* Right side */}
 					<div className="flex items-center">
 						<button
 							type="button"
@@ -83,7 +78,7 @@ const App: FC = () => {
 				</header>
 
 				{/* Main Area with Routes */}
-				<main className="flex-1 overflow-auto bg-gray-50">
+				<main className="flex-1 overflow-auto">
 					<Routes>
 						<Route path="/" element={<Navigate to="/dashboard" replace />} />
 						<Route path="/dashboard" element={<DashboardPage />} />
