@@ -99,7 +99,7 @@ const App: FC = () => {
 						<button
 							title="Side navigation"
 							type="button"
-							className="lg:hidden p-2 rounded-lg transition-colors"
+							className="lg:hidden p-2 rounded-md transition-colors"
 							aria-haspopup="menu"
 							aria-label="Side navigation"
 							aria-expanded={isSideNavOpen}
@@ -109,15 +109,24 @@ const App: FC = () => {
 							{isSideNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
 						</button>
 						{/* Search */}
-						<SearchInput />
+						<div className="hidden lg:block lg:min-w-[350px]">
+							<SearchInput />
+						</div>
 					</div>
-					<div className="flex items-center">
+					{/* User Profile Section */}
+					<div className="flex items-center gap-3 ml-4">
+						{/* Username */}
+						<span className="text-sm font-medium text-gray-700">John Doe</span>
+
+						{/* Logout Button */}
 						<button
 							type="button"
-							className="px-4 py-2 bg-gray-100 rounded-lg transition-colors duration-200"
-							aria-label="Action button"
+							onClick={() => {
+								console.log('Logging out...');
+							}}
+							className="ml-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-md transition-colors duration-200"
 						>
-							Action Button
+							Logout
 						</button>
 					</div>
 				</header>
