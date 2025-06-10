@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Layout Components */
+  .items-container {
+    @apply h-full flex;
+  }
+
+  .items-left-panel {
+    @apply w-full lg:w-[35%] h-full flex flex-col overflow-hidden border-r border-neutral-200;
+  }
+
+  .items-right-panel {
+    @apply hidden lg:flex flex-1 h-full flex-col overflow-hidden;
+  }
+
+  /* Header Components */
+  .items-header {
+    @apply flex-shrink-0 px-4 lg:px-6 py-4 bg-neutral-50 border-b border-neutral-200;
+  }
+
+  .items-header-content {
+    @apply flex items-center justify-between;
+  }
+
+  .items-detail-header {
+    @apply flex-shrink-0 p-8 bg-neutral-50 border-b border-neutral-200;
+  }
+
+  /* List Components */
+  .items-list {
+    @apply flex-1 overflow-y-auto pt-0 pb-6;
+  }
+
+  .items-list-container {
+    @apply space-y-0;
+  }
+
+  .items-list-item {
+    @apply py-4 px-4 lg:px-6 bg-white border-b border-neutral-200;
+  }
+
+  /* Detail Components */
+  .items-detail-content {
+    @apply flex-1 overflow-y-auto p-8;
+  }
+}
