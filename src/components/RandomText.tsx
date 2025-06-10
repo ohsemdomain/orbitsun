@@ -113,9 +113,9 @@ const RandomText: FC = () => {
 
 	return (
 		<div>
-			<h3 className="font-semibold mb-2">Random Text (1000 characters):</h3>
+			<h3 className="font-semibold mb-2">Random Text</h3>
 			<p className="text-gray-600 break-words">{randomText}</p>
-			<p className="mt-2 text-sm text-gray-400">Character count: {randomText.length}</p>
+			<p className="mt-2 text-sm text-gray-400 pb-2">Character count: {randomText.length}</p>
 		</div>
 	);
 };
