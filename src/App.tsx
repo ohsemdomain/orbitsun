@@ -1,6 +1,8 @@
-import { LayoutDashboard, Users, Ticket, Settings, Waves } from 'lucide-react';
+import { LayoutDashboard, Users, Ticket, Settings, Menu, X, Target } from 'lucide-react';
 import type { FC } from 'react';
+import { useState } from 'react';
 import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { SearchInput } from './components/search/SearchInput';
 import DashboardPage from './features/dashboard/DashboardPage';
 import ItemsPage from './features/items/ItemsPage';
 import ContactsPage from './features/contacts/ContactsPage';
@@ -20,56 +22,99 @@ const App: FC = () => {
 		{ icon: Settings, label: 'Settings', path: '/settings' },
 	];
 
-	return (
-		<div className="flex h-screen">
-			<aside className="flex flex-col w-64 h-screen px-4 py-8 bg-gray-900">
-				<NavLink to="/" className="mb-8">
-					<div className="mr-6 flex items-center space-x-2">
-						<Waves className="h-5 w-5 text-blue-500" />
-						<span className="text-blue-500 hidden font-bold sm:inline-block font-headline">ORBITSUN</span>
-					</div>
-				</NavLink>
+	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
-				<nav className="flex-1">
-					{navItems.map((item, index) => {
-						const Icon = item.icon;
-						return (
-							<NavLink
-								key={item.path}
-								to={item.path}
-								className={({ isActive }) =>
-									`flex items-center px-4 py-2 ${index > 0 ? 'mt-5' : ''} ${
-										isActive
-											? 'text-white bg-blue-500 rounded-md'
-											: 'text-white transition-colors duration-300 transform hover:bg-gray-100 hover:text-gray-700'
-									}`
-								}
-							>
-								<Icon className="w-5 h-5" />
-								<span className="ml-3">{item.label}</span>
-							</NavLink>
-						);
-					})}
-				</nav>
+	const NavContent = () => (
+		<>
+			<NavLink to="/" className="mb-8" onClick={() => setIsSideNavOpen(false)}>
+				<div className="flex items-center space-x-2">
+					<Target className="h-5 w-5 text-blue-500" />
+					<span className="text-blue-500 font-bold">ORBITSUN</span>
+				</div>
+			</NavLink>
+
+			<nav className="flex-1">
+				{navItems.map((item, index) => {
+					const Icon = item.icon;
+					return (
+						<NavLink
+							key={item.path}
+							to={item.path}
+							onClick={() => setIsSideNavOpen(false)}
+							className={({ isActive }) =>
+								`flex items-center px-4 py-2 ${index > 0 ? 'mt-2' : ''} ${
+									isActive
+										? 'text-white bg-blue-500 rounded-md'
+										: 'text-white transition-colors duration-300 transform'
+								}`
+							}
+						>
+							<Icon className="w-5 h-5" />
+							<span className="ml-3">{item.label}</span>
+						</NavLink>
+					);
+				})}
+			</nav>
+		</>
+	);
+
+	return (
+		<div className="flex h-screen relative">
+			{/* Desktop Sidebar */}
+			<aside className="hidden lg:flex flex-col w-64 h-screen px-4 py-8 bg-gray-900">
+				<NavContent />
+			</aside>
+
+			{/* Mobile Sidebar Overlay */}
+			{isSideNavOpen && (
+				<div
+					className="fixed inset-0 bg-black/70 bg-opacity-50 z-40 lg:hidden"
+					onClick={() => setIsSideNavOpen(false)}
+					onKeyDown={(e) => {
+						if (e.key === 'Escape') {
+							setIsSideNavOpen(false);
+						}
+					}}
+					role="button"
+					tabIndex={0}
+					aria-label="Close navigation"
+				/>
+			)}
+
+			{/* Mobile Sidebar */}
+			<aside
+				id="nav-menu-1"
+				className={`fixed top-0 left-0 z-50 flex flex-col w-64 h-screen px-4 py-8 bg-gray-900 transform transition-transform duration-300 lg:hidden ${
+					isSideNavOpen ? 'translate-x-0' : '-translate-x-full'
+				}`}
+			>
+				<NavContent />
 			</aside>
 
 			<div className="flex-1 flex flex-col">
 				{/* Topbar */}
 				<header className="flex items-center justify-between h-16 px-6 bg-white border-b">
-					<div className="flex items-center flex-1 max-w-md">
-						<div className="relative w-full">
-							<input
-								type="text"
-								placeholder="Search..."
-								className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-								aria-label="Search"
-							/>
-						</div>
+					<div className="flex items-center flex-1 max-w-md gap-4">
+						{/* Mobile trigger */}
+						<button
+							title="Side navigation"
+							type="button"
+							className="lg:hidden p-2 rounded-lg transition-colors"
+							aria-haspopup="menu"
+							aria-label="Side navigation"
+							aria-expanded={isSideNavOpen}
+							aria-controls="nav-menu-1"
+							onClick={() => setIsSideNavOpen(!isSideNavOpen)}
+						>
+							{isSideNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+						</button>
+						{/* Search */}
+						<SearchInput />
 					</div>
 					<div className="flex items-center">
 						<button
 							type="button"
-							className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"
+							className="px-4 py-2 bg-gray-100 rounded-lg transition-colors duration-200"
 							aria-label="Action button"
 						>
 							Action Button
@@ -77,7 +122,7 @@ const App: FC = () => {
 					</div>
 				</header>
 
-				{/* Main Area with Routes */}
+				{/* Main Area */}
 				<main className="flex-1 overflow-auto">
 					<Routes>
 						<Route path="/" element={<Navigate to="/dashboard" replace />} />

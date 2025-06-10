@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite"
+    "dev": "vite",
+    "lint": "bunx @biomejs/biome lint .",
+    "ts": "bun run tsc --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",
