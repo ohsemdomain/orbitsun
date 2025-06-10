@@ -22,10 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-.wrangler
-.dev.vars*
-wrangler.toml
-
-# TypeScript build cache
-*.tsbuildinfo

@@ -1,23 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
-import path from "node:path";
-import { cloudflare } from "@cloudflare/vite-plugin"
-import tailwind from '@tailwindcss/vite'
 
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwind(),
-    cloudflare()
-  ],
-  server: {
-    port: 5151,
-  },
-  resolve: {
-    alias: {
-      '~client': path.resolve(__dirname, './app/client'),
-      '~server': path.resolve(__dirname, './app/server'),
-      '~shared': path.resolve(__dirname, './app/shared')
-    },
-  },
+  plugins: [react()],
 })
