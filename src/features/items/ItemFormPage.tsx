@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
-import Select from '../../components/ui/select/Select';
+import { Input, Textarea, Select } from '../../components/ui';
 import './item.css';
 
 const ItemFormPage: FC = () => {
@@ -22,11 +22,19 @@ const ItemFormPage: FC = () => {
 		{ value: 'other', label: 'Other' },
 	];
 
-	const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value, type } = evt.target;
 		setFormData((prev) => ({
 			...prev,
-			[name]: type === 'checkbox' ? (evt.target as HTMLInputElement).checked : value,
+			[name]: type === 'checkbox' ? evt.target.checked : value,
+		}));
+	};
+
+	const handleTextareaChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const { name, value } = evt.target;
+		setFormData((prev) => ({
+			...prev,
+			[name]: value,
 		}));
 	};
 
@@ -54,63 +62,39 @@ const ItemFormPage: FC = () => {
 						<h2 className="form-section-title">Basic Information</h2>
 						
 						{/* Name Input */}
-						<div className="settings-form-group">
-							<input
-								id="name"
-								type="text"
-								name="name"
-								placeholder="Item name"
-								value={formData.name}
-								className="settings-input"
-								onChange={handleChange}
-							/>
-							<label
-								htmlFor="name"
-								className="settings-label"
-							>
-								Item Name
-							</label>
-						</div>
+						<Input
+							id="name"
+							name="name"
+							type="text"
+							value={formData.name}
+							onChange={handleInputChange}
+							placeholder="Item name"
+							label="Item Name"
+						/>
 
 						{/* Description Textarea */}
-						<div className="settings-form-group">
-							<textarea
-								id="description"
-								name="description"
-								placeholder="Item description"
-								rows={3}
-								value={formData.description}
-								className="settings-textarea"
-								onChange={handleChange}
-							/>
-							<label
-								htmlFor="description"
-								className="settings-label"
-							>
-								Description
-							</label>
-						</div>
+						<Textarea
+							id="description"
+							name="description"
+							value={formData.description}
+							onChange={handleTextareaChange}
+							placeholder="Item description"
+							label="Description"
+							rows={3}
+						/>
 
 						<div className="form-row">
 							{/* Price Input */}
-							<div className="settings-form-group">
-								<input
-									id="price"
-									type="number"
-									name="price"
-									placeholder="0.00"
-									step="0.01"
-									value={formData.price}
-									className="settings-input"
-									onChange={handleChange}
-								/>
-								<label
-									htmlFor="price"
-									className="settings-label"
-								>
-									Price
-								</label>
-							</div>
+							<Input
+								id="price"
+								name="price"
+								type="number"
+								value={formData.price}
+								onChange={handleInputChange}
+								placeholder="0.00"
+								label="Price"
+								step="0.01"
+							/>
 
 							{/* Category Select */}
 							<Select
@@ -131,7 +115,7 @@ const ItemFormPage: FC = () => {
 									name="isActive"
 									className="form-checkbox"
 									checked={formData.isActive}
-									onChange={handleChange}
+									onChange={handleInputChange}
 								/>
 								<span>Active</span>
 							</label>
