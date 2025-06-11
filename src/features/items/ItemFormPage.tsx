@@ -100,7 +100,6 @@ const ItemFormPage: FC = () => {
 							type="text"
 							value={formData.name}
 							onChange={handleInputChange}
-							placeholder="Item name"
 							label="Item Name"
 						/>
 
@@ -110,7 +109,6 @@ const ItemFormPage: FC = () => {
 							name="description"
 							value={formData.description}
 							onChange={handleTextareaChange}
-							placeholder="Item description"
 							label="Description"
 							rows={6}
 						/>
@@ -123,7 +121,6 @@ const ItemFormPage: FC = () => {
 								type="number"
 								value={formData.price}
 								onChange={handleInputChange}
-								placeholder="0.00"
 								label="Price"
 								step="0.01"
 							/>
@@ -135,7 +132,6 @@ const ItemFormPage: FC = () => {
 								type="text"
 								value={formData.unitName}
 								onChange={handleInputChange}
-								placeholder="e.g. pieces, kg, liters"
 								label="Unit Name"
 							/>
 						</div>
