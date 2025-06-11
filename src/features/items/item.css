@@ -84,7 +84,7 @@
   }
 
   .form-row {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mt-6;
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mt-4;
   }
 
   .form-checkbox-group {
@@ -100,7 +100,7 @@
   }
 
   .form-actions {
-    @apply flex items-center justify-end gap-3 pt-6 border-t border-neutral-200;
+    @apply flex items-center justify-end gap-3 mt-16;
   }
 
 }

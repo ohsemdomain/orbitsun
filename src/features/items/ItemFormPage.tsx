@@ -15,6 +15,7 @@ const ItemFormPage: FC = () => {
 		description: '',
 		price: '',
 		category: '',
+		unitName: '',
 		status: 'active',
 	});
 
@@ -70,6 +71,7 @@ const ItemFormPage: FC = () => {
 				description: `This is the description for item ${id}`,
 				price: '29.99',
 				category: 'electronics',
+				unitName: 'pieces',
 				status: 'active',
 			};
 			setFormData(mockItemData);
@@ -90,7 +92,6 @@ const ItemFormPage: FC = () => {
 			<div className="forms-content">
 				<form className="forms-form">
 					<div className="form-section">
-						<h2 className="form-section-title">Basic Information</h2>
 						
 						{/* Name Input */}
 						<Input
@@ -111,7 +112,7 @@ const ItemFormPage: FC = () => {
 							onChange={handleTextareaChange}
 							placeholder="Item description"
 							label="Description"
-							rows={3}
+							rows={6}
 						/>
 
 						<div className="form-row">
@@ -127,17 +128,28 @@ const ItemFormPage: FC = () => {
 								step="0.01"
 							/>
 
-							{/* Category Select */}
-							<Select
-								id="category"
-								name="category"
-								value={formData.category}
-								onChange={handleCategoryChange}
-								options={categoryOptions}
-								placeholder="Select category"
-								label="Category"
+							{/* Unit Name Input */}
+							<Input
+								id="unitName"
+								name="unitName"
+								type="text"
+								value={formData.unitName}
+								onChange={handleInputChange}
+								placeholder="e.g. pieces, kg, liters"
+								label="Unit Name"
 							/>
 						</div>
+
+						{/* Category Select */}
+						<Select
+							id="category"
+							name="category"
+							value={formData.category}
+							onChange={handleCategoryChange}
+							options={categoryOptions}
+							placeholder="Select category"
+							label="Category"
+						/>
 
 						{/* Status Select - Only show when editing */}
 						{isEditing && (

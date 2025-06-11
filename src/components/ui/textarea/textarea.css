@@ -23,7 +23,7 @@
 
   /* Textarea Label */
   .textarea-label {
-    @apply absolute left-2 -top-2 z-[1] cursor-text px-2 text-xs text-slate-400 transition-all bg-white;
+    @apply absolute left-2 -top-2 z-[1] cursor-text px-2 text-xs text-slate-400 transition-all bg-white whitespace-nowrap;
   }
 
   .textarea-label::before {
