@@ -52,7 +52,7 @@ const Select: FC<SelectProps> = ({
 	const selectedOption = options.find((opt) => opt.value === value);
 
 	return (
-		<div className={`settings-select-container ${className}`} ref={selectRef}>
+		<div className={`select-container ${className}`} ref={selectRef}>
 			<button
 				type="button"
 				id={id}
@@ -66,19 +66,19 @@ const Select: FC<SelectProps> = ({
 				}}
 				aria-expanded={isOpen}
 				aria-label={label || placeholder}
-				className={`settings-select ${
+				className={`select-button ${
 					isOpen ? 'border-blue-500' : 'border-slate-200'
 				} ${value ? 'text-slate-700' : 'text-slate-500'}`}
 			>
-				<div className="settings-select-content">
+				<div className="select-content">
 					<span>{selectedOption ? selectedOption.label : placeholder}</span>
-					<ChevronDown className={`settings-select-icon ${isOpen ? 'rotate-180' : ''}`} />
+					<ChevronDown className={`select-icon ${isOpen ? 'rotate-180' : ''}`} />
 				</div>
 			</button>
 			
 			{label && (
 				<span
-					className={`settings-select-label ${
+					className={`select-label ${
 						isOpen ? 'text-blue-500' : 'text-slate-400'
 					} ${value || isOpen ? '' : 'opacity-0'}`}
 				>
@@ -88,7 +88,7 @@ const Select: FC<SelectProps> = ({
 
 			{/* Dropdown Options */}
 			{isOpen && (
-				<div className="settings-select-dropdown">
+				<div className="select-dropdown">
 					{options.map((option) => (
 						<button
 							key={option.value}
@@ -100,7 +100,7 @@ const Select: FC<SelectProps> = ({
 									handleSelect(option.value);
 								}
 							}}
-							className={`settings-select-option ${
+							className={`select-option ${
 								value === option.value
 									? 'bg-blue-50 text-blue-600'
 									: 'text-slate-700'
