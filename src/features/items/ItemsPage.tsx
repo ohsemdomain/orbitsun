@@ -1,9 +1,12 @@
 import type { FC } from 'react';
 import { Plus, SquarePen, Tag } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import RandomText from '../../components/RandomText';
 import './item.css';
 
 const ItemsPage: FC = () => {
+	const navigate = useNavigate();
+
 	return (
 		<div className="items-container">
 			{/* Left Panel - Full width on mobile, 45% on lg and above */}
@@ -14,7 +17,11 @@ const ItemsPage: FC = () => {
 							<h2>Items</h2>
 						</div>
 						<div>
-							<button type="button" className="btn-primary-icon">
+							<button
+								type="button"
+								className="btn-primary-icon"
+								onClick={() => navigate('/items/new')}
+							>
 								<Plus className="w-4 h-4" />
 							</button>
 						</div>

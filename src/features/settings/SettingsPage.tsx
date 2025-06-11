@@ -248,7 +248,8 @@ const SettingsPage: FC = () => {
 
 							{/* Tax Type Select */}
 							<div className="settings-select-container" ref={selectRef}>
-								<div
+								<button
+									type="button"
 									onClick={() => setIsSelectOpen(!isSelectOpen)}
 									onKeyDown={(e) => {
 										if (e.key === 'Enter' || e.key === ' ') {
@@ -256,8 +257,6 @@ const SettingsPage: FC = () => {
 											setIsSelectOpen(!isSelectOpen);
 										}
 									}}
-									role="button"
-									tabIndex={0}
 									aria-expanded={isSelectOpen}
 									aria-label="Select tax type"
 									className={`settings-select ${
@@ -274,7 +273,7 @@ const SettingsPage: FC = () => {
 											className={`settings-select-icon ${isSelectOpen ? 'rotate-180' : ''}`}
 										/>
 									</div>
-								</div>
+								</button>
 								<span
 									className={`settings-select-label ${
 										isSelectOpen ? 'text-blue-500' : 'text-slate-400'
@@ -287,8 +286,9 @@ const SettingsPage: FC = () => {
 								{isSelectOpen && (
 									<div className="settings-select-dropdown">
 										{taxTypeOptions.map((option) => (
-											<div
+											<button
 												key={option.value}
+												type="button"
 												onClick={() => handleSelectChange(option.value)}
 												onKeyDown={(e) => {
 													if (e.key === 'Enter' || e.key === ' ') {
@@ -296,9 +296,6 @@ const SettingsPage: FC = () => {
 														handleSelectChange(option.value);
 													}
 												}}
-												role="option"
-												tabIndex={0}
-												aria-selected={formData.taxType === option.value}
 												className={`settings-select-option ${
 													formData.taxType === option.value
 														? 'bg-blue-50 text-blue-600'
@@ -306,7 +303,7 @@ const SettingsPage: FC = () => {
 												}`}
 											>
 												{option.label}
-											</div>
+											</button>
 										))}
 									</div>
 								)}

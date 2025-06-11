@@ -17,6 +17,7 @@ import { SearchInput } from './components/search/SearchInput';
 import DashboardPage from './features/dashboard/DashboardPage';
 import TasksPage from './features/tasks/TasksPage';
 import ItemsPage from './features/items/ItemsPage';
+import ItemFormPage from './features/items/ItemFormPage';
 import InvoicesPage from './features/invoices/InvoicesPage';
 import PurchasesPage from './features/purchases/PurchasesPage';
 import ContactsPage from './features/contacts/ContactsPage';
@@ -170,6 +171,8 @@ const App: FC = () => {
 							<Route path="/dashboard" element={<DashboardPage />} />
 							<Route path="/tasks" element={<TasksPage />} />
 							<Route path="/items" element={<ItemsPage />} />
+							<Route path="/items/new" element={<ItemFormPage />} />
+							<Route path="/items/:id/edit" element={<ItemFormPage />} />
 							<Route path="/contacts" element={<ContactsPage />} />
 							<Route path="/invoices" element={<InvoicesPage />} />
 							<Route path="/purchases" element={<PurchasesPage />} />
