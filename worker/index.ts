@@ -7,9 +7,9 @@ export default {
         const url = new URL(request.url);
         
         // Handle tRPC API requests
-        if (url.pathname.startsWith('/api/trpc')) {
+        if (url.pathname.startsWith('/trpc')) {
             return fetchRequestHandler({
-                endpoint: '/api/trpc',
+                endpoint: '/trpc',
                 req: request,
                 router: appRouter,
                 createContext: (): Context => ({ env, executionCtx: ctx }),

@@ -1,4 +1,4 @@
-import { trpc } from '../lib/trpc';
+import { trpc } from '../../trpc';
 
 // Hook for fetching contacts with pagination and search
 export const useContacts = (params: {

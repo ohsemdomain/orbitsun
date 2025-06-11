@@ -1,4 +1,4 @@
-import { trpc } from '../lib/trpc';
+import { trpc } from '../../trpc';
 
 // Hook for fetching items with pagination and filters
 export const useItems = (params: {

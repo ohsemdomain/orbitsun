@@ -1,4 +1,4 @@
-import { trpc } from '../lib/trpc';
+import { trpc } from '../../trpc';
 
 // Hook for fetching tasks with pagination and filters
 export const useTasks = (params: {
