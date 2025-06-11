@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Layout Components */
+  .purchases-container {
+    @apply h-full flex;
+  }
+
+  .purchases-left-panel {
+    @apply w-full lg:w-[35%] h-full flex flex-col overflow-hidden border-r border-neutral-200;
+  }
+
+  .purchases-right-panel {
+    @apply hidden lg:flex flex-1 h-full flex-col overflow-hidden;
+  }
+
+  /* Header Components */
+  .purchases-header {
+    @apply flex-shrink-0 px-4 lg:px-6 py-6;
+  }
+
+  .purchases-header-content {
+    @apply flex items-center justify-between;
+  }
+
+  .purchases-detail-header {
+    @apply flex-shrink-0 px-8 py-6;
+  }
+
+  /* List Components */
+  .purchases-list-wrapper {
+    @apply flex-1 overflow-hidden;
+  }
+
+  .purchases-list-container {
+    @apply pt-0 pb-6;
+  }
+
+  .purchases-list {
+    @apply space-y-0 border-t border-neutral-100;
+  }
+
+  .purchases-list-item {
+    @apply py-4 px-4 lg:px-6 border-b border-neutral-100;
+  }
+
+  /* Detail Components */
+  .purchases-detail-content {
+    @apply flex-1 overflow-y-auto p-8 pt-0;
+  }
+
+  .purchases-detail-card {
+    @apply p-6 rounded-md border border-neutral-200;
+  }
+}

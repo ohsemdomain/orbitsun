@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Layout Components */
+  .contacts-container {
+    @apply h-full flex;
+  }
+
+  .contacts-left-panel {
+    @apply w-full lg:w-[35%] h-full flex flex-col overflow-hidden border-r border-neutral-200;
+  }
+
+  .contacts-right-panel {
+    @apply hidden lg:flex flex-1 h-full flex-col overflow-hidden;
+  }
+
+  /* Header Components */
+  .contacts-header {
+    @apply flex-shrink-0 px-4 lg:px-6 py-4 bg-neutral-50 border-b border-neutral-200;
+  }
+
+  .contacts-header-content {
+    @apply flex items-center justify-between;
+  }
+
+  .contacts-detail-header {
+    @apply flex-shrink-0 p-8 bg-neutral-50 border-b border-neutral-200;
+  }
+
+  /* List Components */
+  .contacts-list {
+    @apply flex-1 overflow-y-auto pt-0 pb-6;
+  }
+
+  .contacts-list-container {
+    @apply space-y-0;
+  }
+
+  .contacts-list-item {
+    @apply py-4 px-4 lg:px-6 bg-white border-b border-neutral-200;
+  }
+
+  /* Detail Components */
+  .contacts-detail-content {
+    @apply flex-1 overflow-y-auto p-8;
+  }
+}
