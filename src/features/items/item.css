@@ -38,7 +38,28 @@
   }
 
   .items-list-item {
-    @apply py-4 px-4 lg:px-6 bg-white border-b border-neutral-200;
+    @apply py-4 px-4 lg:px-6 bg-white border-b border-neutral-200 hover:bg-neutral-50 cursor-pointer transition-colors;
+  }
+
+  /* Item Content Components */
+  .item-content {
+    @apply flex items-center justify-between;
+  }
+
+  .item-left {
+    @apply flex flex-col;
+  }
+
+  .item-name {
+    @apply font-medium text-neutral-900 text-sm;
+  }
+
+  .item-category {
+    @apply text-xs text-neutral-500 mt-1;
+  }
+
+  .item-price {
+    @apply font-semibold text-neutral-900 text-sm;
   }
 
   /* Detail Components */

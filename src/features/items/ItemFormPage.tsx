@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { Input, Textarea, Select } from '../../components/ui';
-import { ItemCategory, ItemStatus, type ItemFormData } from '../../../shared/item';
+import { ItemCategory, ItemStatus, type ItemFormData } from '@shared/item';
 import './item.css';
 
 const ItemFormPage: FC = () => {
