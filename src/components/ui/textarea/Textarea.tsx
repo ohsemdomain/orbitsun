@@ -6,7 +6,6 @@ interface TextareaProps {
 	name?: string;
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	placeholder?: string;
 	label?: string;
 	rows?: number;
 	className?: string;
@@ -19,7 +18,6 @@ const Textarea: FC<TextareaProps> = ({
 	name,
 	value,
 	onChange,
-	placeholder,
 	label,
 	rows = 3,
 	className = '',
@@ -33,7 +31,7 @@ const Textarea: FC<TextareaProps> = ({
 				name={name}
 				value={value}
 				onChange={onChange}
-				placeholder={label ? ' ' : placeholder}
+				placeholder=" "
 				rows={rows}
 				disabled={disabled}
 				required={required}

@@ -7,7 +7,6 @@ interface InputProps {
 	type?: 'text' | 'email' | 'tel' | 'url' | 'number' | 'password';
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	placeholder?: string;
 	label?: string;
 	step?: string;
 	className?: string;
@@ -21,7 +20,6 @@ const Input: FC<InputProps> = ({
 	type = 'text',
 	value,
 	onChange,
-	placeholder,
 	label,
 	step,
 	className = '',
@@ -36,7 +34,7 @@ const Input: FC<InputProps> = ({
 				type={type}
 				value={value}
 				onChange={onChange}
-				placeholder={label ? ' ' : placeholder}
+				placeholder=" "
 				step={step}
 				disabled={disabled}
 				required={required}

@@ -12,12 +12,7 @@
     @apply relative w-full px-4 py-2 text-sm transition-all border rounded outline-none focus-visible:outline-none border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-blue-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 resize-none;
   }
 
-  .textarea-field:placeholder-shown+.textarea-label {
-    @apply top-2.5 text-sm;
-  }
-
-  .textarea-field:focus+.textarea-label,
-  .textarea-field:not(:placeholder-shown)+.textarea-label {
+  .textarea-field:focus+.textarea-label {
     @apply -top-2 text-xs text-blue-500;
   }
 
