@@ -21,6 +21,7 @@ import InvoicesPage from './features/invoices/InvoicesPage';
 import PurchasesPage from './features/purchases/PurchasesPage';
 import ContactsPage from './features/contacts/ContactsPage';
 import SettingsPage from './features/settings/SettingsPage';
+import SigninPage from './features/auth/SigninPage';
 
 interface NavItem {
 	icon: FC<{ className?: string }>;
@@ -153,6 +154,7 @@ const App: FC = () => {
 					<div className="h-full">
 						<Routes>
 							<Route path="/" element={<Navigate to="/dashboard" replace />} />
+							<Route path="/signin" element={<SigninPage />} />
 							<Route path="/dashboard" element={<DashboardPage />} />
 							<Route path="/tasks" element={<TasksPage />} />
 							<Route path="/items" element={<ItemsPage />} />

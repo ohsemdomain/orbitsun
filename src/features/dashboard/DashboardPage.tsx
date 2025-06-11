@@ -2,6 +2,7 @@
 import type { FC } from 'react';
 import RandomText from '../../components/RandomText';
 import { DailySalesChart } from './charts/DailySalesChart';
+import { TRPCDemo } from '../../components/TRPCDemo';
 
 const DashboardPage: FC = () => {
 	return (
@@ -129,6 +130,11 @@ const DashboardPage: FC = () => {
 							<h3 className="font-semibold mb-4">Daily Sales Performance</h3>
 							<DailySalesChart />
 						</div>
+					</div>
+
+					{/* tRPC Demo */}
+					<div className="grid grid-cols-1 lg:grid-cols-1 gap-4">
+						<TRPCDemo />
 					</div>
 
 					{/* Random Text Cards */}
