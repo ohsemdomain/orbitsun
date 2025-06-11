@@ -1,41 +1,41 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react'
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 
 interface ErrorBoundaryState {
-	hasError: boolean
-	error?: Error
-	errorInfo?: ErrorInfo
+	hasError: boolean;
+	error?: Error;
+	errorInfo?: ErrorInfo;
 }
 
 interface ErrorBoundaryProps {
-	children: ReactNode
-	fallback?: ReactNode
-	onError?: (error: Error, errorInfo: ErrorInfo) => void
+	children: ReactNode;
+	fallback?: ReactNode;
+	onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 	constructor(props: ErrorBoundaryProps) {
-		super(props)
-		this.state = { hasError: false }
+		super(props);
+		this.state = { hasError: false };
 	}
 
 	static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-		return { hasError: true, error }
+		return { hasError: true, error };
 	}
 
 	componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-		this.setState({ errorInfo })
-		this.props.onError?.(error, errorInfo)
+		this.setState({ errorInfo });
+		this.props.onError?.(error, errorInfo);
 
 		// Log error to console in development
-		if (process.env.NODE_ENV === 'development') {
-			console.error('ErrorBoundary caught an error:', error, errorInfo)
+		if (import.meta.env.DEV) {
+			console.error('ErrorBoundary caught an error:', error, errorInfo);
 		}
 	}
 
 	render() {
 		if (this.state.hasError) {
 			if (this.props.fallback) {
-				return this.props.fallback
+				return this.props.fallback;
 			}
 
 			return (
@@ -59,13 +59,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 									/>
 								</svg>
 							</div>
-							<h2 className="text-xl font-semibold text-gray-900 mb-2">
-								Something went wrong
-							</h2>
+							<h2 className="text-xl font-semibold text-gray-900 mb-2">Something went wrong</h2>
 							<p className="text-gray-600 mb-4">
 								An unexpected error occurred. Please try refreshing the page.
 							</p>
-							{process.env.NODE_ENV === 'development' && this.state.error && (
+							{import.meta.env.DEV && this.state.error && (
 								<details className="mt-4 text-left">
 									<summary className="cursor-pointer text-sm text-red-600 hover:text-red-800">
 										Error Details (Development)
@@ -86,11 +84,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 						</div>
 					</div>
 				</div>
-			)
+			);
 		}
 
-		return this.props.children
+		return this.props.children;
 	}
 }
 
-export default ErrorBoundary
+export default ErrorBoundary;

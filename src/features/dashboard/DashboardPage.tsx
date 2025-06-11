@@ -7,7 +7,7 @@ const DashboardPage: FC = () => {
 	return (
 		<div className="h-full flex flex-col">
 			{/* Sticky Header */}
-			<div className="flex-shrink-0 bg-gradient-to-b from-blue-50 to-white z-10 px-4 lg:px-6 py-4">
+			<div className="flex-shrink-0 bg-gradient-to-b from-blue-50 to-white z-10 px-4 lg:px-6 py-2 lg:py-4">
 				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 					{/* Left side - Title and description */}
 					<div>
@@ -35,7 +35,7 @@ const DashboardPage: FC = () => {
 
 			{/* Scrollable Content */}
 			<div className="flex-1 overflow-y-auto no-scrollbar">
-				<div className="p-2 lg:p-6">
+				<div className="p-4 lg:p-6">
 					{/* Small Cards */}
 					<div className="mb-4 grid grid-cols-1 lg:grid-cols-5 gap-4">
 						<div className="bg-white p-4 rounded-md border border-neutral-300">

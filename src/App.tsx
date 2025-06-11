@@ -110,7 +110,7 @@ const App: FC = () => {
 
 			<div className="flex-1 flex flex-col">
 				{/* Topbar */}
-				<header className="flex items-center justify-between h-16 px-2 lg:px-6 bg-neutral-100 border-b border-neutral-200">
+				<header className="flex items-center justify-between h-16 px-4 lg:px-6 bg-neutral-100 border-b border-neutral-200">
 					<div className="flex items-center flex-1 max-w-md gap-4">
 						{/* Mobile trigger */}
 						<button

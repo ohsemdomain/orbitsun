@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "bun run ts && vite build",
+    "deploy": "bun run build && wrangler deploy",
     "lint": "bunx @biomejs/biome lint .",
     "ts": "bun run tsc --noEmit"
   },
