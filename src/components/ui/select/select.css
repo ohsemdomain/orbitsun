@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@layer components {
+  /* Select Container */
+  .settings-select-container {
+    @apply relative my-6;
+  }
+
+  /* Select Button */
+  .settings-select {
+    @apply relative h-10 w-full rounded border px-4 text-sm cursor-pointer transition-all outline-none text-left;
+  }
+
+  /* Select Content */
+  .settings-select-content {
+    @apply flex items-center justify-between h-full;
+  }
+
+  /* Select Icon */
+  .settings-select-icon {
+    @apply w-4 h-4 transition-transform;
+  }
+
+  /* Select Label */
+  .settings-select-label {
+    @apply absolute left-2 -top-2 z-[1] px-2 text-xs transition-all bg-white;
+  }
+
+  /* Select Dropdown */
+  .settings-select-dropdown {
+    @apply absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded shadow-lg z-10 max-h-60 overflow-y-auto;
+  }
+
+  /* Select Option */
+  .settings-select-option {
+    @apply w-full px-4 py-2 text-sm text-left cursor-pointer transition-colors hover:bg-slate-50;
+  }
+}
