@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import { taskSchema } from '../../../shared/types';
-import type { Task } from '../../../shared/types';
+import { taskSchema, type Task } from '@shared/task';
 
 export const taskMutations = {
   create: publicProcedure

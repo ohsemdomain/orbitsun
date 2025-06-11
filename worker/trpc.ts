@@ -1,5 +1,5 @@
 import { initTRPC } from '@trpc/server';
-import type { User } from '../shared/types';
+import type { User } from '@shared/user';
 
 // Environment interface for Cloudflare Workers
 interface Env {

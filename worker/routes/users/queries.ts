@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import type { User, PaginatedResponse } from '../../../shared/types';
+import type { User } from '@shared/user';
+import type { PaginatedResponse } from '@shared/common';
 
 export const userQueries = {
   list: publicProcedure

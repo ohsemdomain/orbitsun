@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import type { User } from '../../../shared/types';
+import type { User } from '@shared/user';
 
 export const authQueries = {
   me: publicProcedure

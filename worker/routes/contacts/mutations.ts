@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import { contactSchema } from '../../../shared/types';
-import type { Contact } from '../../../shared/types';
+import { contactSchema, type Contact } from '@shared/contact';
 
 export const contactMutations = {
   create: publicProcedure

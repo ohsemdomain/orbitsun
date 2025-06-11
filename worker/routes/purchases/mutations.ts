@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import { purchaseSchema } from '../../../shared/types';
-import type { Purchase } from '../../../shared/types';
+import { purchaseSchema, type Purchase } from '@shared/purchase';
 
 export const purchaseMutations = {
   create: publicProcedure

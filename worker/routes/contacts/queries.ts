@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import type { Contact, PaginatedResponse } from '../../../shared/types';
+import type { Contact } from '@shared/contact';
+import type { PaginatedResponse } from '@shared/common';
 
 export const contactQueries = {
   list: publicProcedure
