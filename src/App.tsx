@@ -34,6 +34,8 @@ const App: FC = () => {
 	const location = useLocation();
 	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
+	const isFormPage = location.pathname.endsWith('/new') || location.pathname.endsWith('/edit');
+
 	// Check if current route should show the full layout
 	const isAuthRoute = location.pathname === '/signin';
 
@@ -125,44 +127,46 @@ const App: FC = () => {
 
 			<div className="flex-1 flex flex-col">
 				{/* Topbar */}
-				<header className="flex items-center justify-between h-16 px-4 lg:px-6 bg-neutral-100 border-b border-neutral-200">
-					<div className="flex items-center flex-1 max-w-md gap-4">
-						{/* Mobile trigger */}
-						<button
-							title="Side navigation"
-							type="button"
-							className="lg:hidden p-2 text-white bg-primary-500 rounded transition-colors"
-							aria-haspopup="menu"
-							aria-label="Side navigation"
-							aria-expanded={isSideNavOpen}
-							aria-controls="nav-menu-1"
-							onClick={() => setIsSideNavOpen(!isSideNavOpen)}
-						>
-							{isSideNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-						</button>
-						{/* Search */}
-						<div className="hidden lg:block lg:min-w-[450px]">
-							<SearchInput />
+				{!isFormPage && (
+					<header className="flex items-center justify-between h-16 px-4 lg:px-6 bg-neutral-100 border-b border-neutral-200">
+						<div className="flex items-center flex-1 max-w-md gap-4">
+							{/* Mobile trigger */}
+							<button
+								title="Side navigation"
+								type="button"
+								className="lg:hidden p-2 text-white bg-primary-500 rounded transition-colors"
+								aria-haspopup="menu"
+								aria-label="Side navigation"
+								aria-expanded={isSideNavOpen}
+								aria-controls="nav-menu-1"
+								onClick={() => setIsSideNavOpen(!isSideNavOpen)}
+							>
+								{isSideNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+							</button>
+							{/* Search */}
+							<div className="hidden lg:block lg:min-w-[450px]">
+								<SearchInput />
+							</div>
 						</div>
-					</div>
-					{/* User Profile Section */}
-					<div className="flex items-center gap-3 ml-4">
-						{/* Username */}
-						<span className="text-sm font-medium text-gray-500">John Doe</span>
+						{/* User Profile Section */}
+						<div className="flex items-center gap-3 ml-4">
+							{/* Username */}
+							<span className="text-sm font-medium text-gray-500">John Doe</span>
 
-						{/* Logout Button */}
-						<button
-							type="button"
-							onClick={() => {
-								console.log('Signing out...');
-							}}
-							className="inline-flex items-center justify-center h-8 gap-2 px-6 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 focus:border-primary-700 focus:text-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:text-primary-300 disabled:shadow-none"
-						>
-							<span>Signout</span>
-						</button>
-					</div>
-				</header>
-
+							{/* Logout Button */}
+							<button
+								type="button"
+								onClick={() => {
+									console.log('Signing out...');
+								}}
+								className="inline-flex items-center justify-center h-8 gap-2 px-6 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 focus:border-primary-700 focus:text-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:text-primary-300 disabled:shadow-none"
+							>
+								<span>Signout</span>
+							</button>
+						</div>
+					</header>
+				)}
+				
 				{/* Main Area */}
 				<main className="flex-1 overflow-hidden">
 					<div className="h-full">
