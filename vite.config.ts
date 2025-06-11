@@ -8,4 +8,15 @@ export default defineConfig({
   server: {
     port: 5009,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'chart-vendor': ['recharts'],
+          'ui-vendor': ['lucide-react', 'react-custom-scrollbars-2'],
+        },
+      },
+    },
+  },
 })

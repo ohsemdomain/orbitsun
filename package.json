@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build": "bun run ts && vite build",
     "lint": "bunx @biomejs/biome lint .",
     "ts": "bun run tsc --noEmit"
   },
