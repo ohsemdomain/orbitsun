@@ -1,18 +1,21 @@
 import type { FC } from 'react';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { Input, Textarea, Select } from '../../components/ui';
 import './item.css';
 
 const ItemFormPage: FC = () => {
 	const navigate = useNavigate();
+	const { id } = useParams<{ id: string }>();
+	const isEditing = Boolean(id);
+
 	const [formData, setFormData] = useState({
 		name: '',
 		description: '',
 		price: '',
 		category: '',
-		isActive: true,
+		status: 'active',
 	});
 
 	const categoryOptions = [
@@ -22,11 +25,16 @@ const ItemFormPage: FC = () => {
 		{ value: 'other', label: 'Other' },
 	];
 
+	const statusOptions = [
+		{ value: 'active', label: 'Active' },
+		{ value: 'inactive', label: 'Inactive' },
+	];
+
 	const handleInputChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value, type } = evt.target;
+		const { name, value } = evt.target;
 		setFormData((prev) => ({
 			...prev,
-			[name]: type === 'checkbox' ? evt.target.checked : value,
+			[name]: value,
 		}));
 	};
 
@@ -45,6 +53,29 @@ const ItemFormPage: FC = () => {
 		}));
 	};
 
+	const handleStatusChange = (value: string) => {
+		setFormData((prev) => ({
+			...prev,
+			status: value,
+		}));
+	};
+
+	// Load existing item data when editing
+	useEffect(() => {
+		if (isEditing && id) {
+			// TODO: Replace with actual API call to fetch item by id
+			// For now, using mock data
+			const mockItemData = {
+				name: `Item ${id}`,
+				description: `This is the description for item ${id}`,
+				price: '29.99',
+				category: 'electronics',
+				status: 'active',
+			};
+			setFormData(mockItemData);
+		}
+	}, [isEditing, id]);
+
 	return (
 		<div className="forms-container">
 			<div className="forms-header">
@@ -52,7 +83,7 @@ const ItemFormPage: FC = () => {
 					<button type="button" className="btn-ghost-icon" onClick={() => navigate('/items')}>
 						<ArrowLeft className="w-5 h-5" />
 					</button>
-					<h1 className="forms-title">Create Item</h1>
+					<h1 className="forms-title">{isEditing ? 'Edit Item' : 'Create Item'}</h1>
 				</div>
 			</div>
 
@@ -108,18 +139,18 @@ const ItemFormPage: FC = () => {
 							/>
 						</div>
 
-						<div className="form-checkbox-group">
-							<label className="form-checkbox-label">
-								<input
-									type="checkbox"
-									name="isActive"
-									className="form-checkbox"
-									checked={formData.isActive}
-									onChange={handleInputChange}
-								/>
-								<span>Active</span>
-							</label>
-						</div>
+						{/* Status Select - Only show when editing */}
+						{isEditing && (
+							<Select
+								id="status"
+								name="status"
+								value={formData.status}
+								onChange={handleStatusChange}
+								options={statusOptions}
+								placeholder="Select status"
+								label="Status"
+							/>
+						)}
 					</div>
 
 					<div className="form-actions">
@@ -128,7 +159,7 @@ const ItemFormPage: FC = () => {
 						</button>
 						<button type="submit" className="btn-primary">
 							<Save className="w-4 h-4" />
-							<span>Save Item</span>
+							<span>{isEditing ? 'Update Item' : 'Save Item'}</span>
 						</button>
 					</div>
 				</form>

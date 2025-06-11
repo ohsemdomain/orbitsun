@@ -49,7 +49,11 @@ const ItemsPage: FC = () => {
 						</div>
 						<div>
 							<div className="btn-group">
-								<button type="button" className="btn-neutral">
+								<button 
+									type="button" 
+									className="btn-neutral"
+									onClick={() => navigate('/items/1/edit')}
+								>
 									<SquarePen className="w-4 h-4" />
 									<span>Edit</span>
 								</button>
