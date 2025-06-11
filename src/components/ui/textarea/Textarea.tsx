@@ -26,22 +26,21 @@ const Textarea: FC<TextareaProps> = ({
 }) => {
 	return (
 		<div className={`textarea-group ${className}`}>
-			<textarea
-				id={id}
-				name={name}
-				value={value}
-				onChange={onChange}
-				placeholder=" "
-				rows={rows}
-				disabled={disabled}
-				required={required}
-				className="textarea-field"
-			/>
 			{label && (
 				<label htmlFor={id} className="textarea-label">
 					{label}
 				</label>
 			)}
+			<textarea
+				id={id}
+				name={name}
+				value={value}
+				onChange={onChange}
+				rows={rows}
+				disabled={disabled}
+				required={required}
+				className="textarea-field"
+			/>
 		</div>
 	);
 };

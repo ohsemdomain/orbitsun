@@ -28,23 +28,22 @@ const Input: FC<InputProps> = ({
 }) => {
 	return (
 		<div className={`input-group ${className}`}>
+			{label && (
+				<label htmlFor={id} className="input-label">
+					{label}
+				</label>
+			)}
 			<input
 				id={id}
 				name={name}
 				type={type}
 				value={value}
 				onChange={onChange}
-				placeholder=" "
 				step={step}
 				disabled={disabled}
 				required={required}
 				className="input-field"
 			/>
-			{label && (
-				<label htmlFor={id} className="input-label">
-					{label}
-				</label>
-			)}
 		</div>
 	);
 };

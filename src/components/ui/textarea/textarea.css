@@ -4,25 +4,16 @@
 
   /* Textarea Group */
   .textarea-group {
-    @apply relative;
+    @apply flex flex-col gap-1;
   }
 
   /* Textarea Field */
   .textarea-field {
-    @apply relative w-full px-4 py-2 text-sm transition-all border rounded outline-none focus-visible:outline-none border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-blue-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 resize-none;
-  }
-
-  .textarea-field:focus+.textarea-label {
-    @apply -top-2 text-xs text-blue-500;
+    @apply w-full px-4 py-2 text-sm transition-all border rounded outline-none focus-visible:outline-none border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-blue-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400 resize-none;
   }
 
   /* Textarea Label */
   .textarea-label {
-    @apply absolute left-2 -top-2 z-[1] cursor-text px-2 text-xs text-slate-400 transition-all bg-white whitespace-nowrap;
-  }
-
-  .textarea-label::before {
-    @apply absolute top-0 left-0 z-[-1] block h-full w-full bg-white transition-all;
-    content: '';
+    @apply text-xs text-slate-600 font-medium;
   }
 }
