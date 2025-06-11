@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @layer components {
+
   /* Select Container */
   .select-container {
-    @apply relative my-6;
+    @apply relative;
   }
 
   /* Select Button */
