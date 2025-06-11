@@ -30,10 +30,10 @@ const InvoicesPage: FC = () => {
 							{/* Left scrollable content goes here */}
 							<div className="invoices-list">
 								{/* Example content */}
-								{[...Array(20)].map((_, i) => (
-									<div key={i} className="invoices-list-item">
-										<p>Invoice {i + 1}</p>
-										<p>Invoice {i + 1}</p>
+								{Array.from({ length: 20 }, (_, i) => ({ id: i + 1, name: `Invoice ${i + 1}` })).map((invoice) => (
+									<div key={invoice.id} className="invoices-list-item">
+										<p>{invoice.name}</p>
+										<p>{invoice.name}</p>
 									</div>
 								))}
 							</div>

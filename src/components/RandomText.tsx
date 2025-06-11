@@ -101,9 +101,9 @@ const RandomText: FC = () => {
 		// Ensure it ends with a period and is exactly 1000 characters
 		text = text.trim();
 		if (text.length > length) {
-			text = text.substring(0, length - 1) + '.';
+			text = `${text.substring(0, length - 1)}.`;
 		} else if (text.length < length) {
-			text = text.padEnd(length - 1, ' ') + '.';
+			text = `${text.padEnd(length - 1, ' ')}.`;
 		}
 
 		return text;

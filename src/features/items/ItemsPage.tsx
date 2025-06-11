@@ -24,9 +24,9 @@ const ItemsPage: FC = () => {
 					{/* Left scrollable content goes here */}
 					<div className="items-list-container">
 						{/* Example content */}
-						{[...Array(20)].map((_, i) => (
-							<div key={i} className="items-list-item">
-								<p>Item {i + 1}</p>
+						{Array.from({ length: 20 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}` })).map((item) => (
+							<div key={item.id} className="items-list-item">
+								<p>{item.name}</p>
 							</div>
 						))}
 					</div>
