@@ -84,6 +84,14 @@
     @apply inline-flex items-center justify-center h-9 gap-2 px-4 sm:px-5 text-sm font-medium tracking-wide text-white transition duration-300 whitespace-nowrap bg-neutral-500 focus:bg-neutral-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-neutral-300 disabled:bg-neutral-300 disabled:shadow-none;
   }
 
+  .btn-secondary {
+    @apply inline-flex items-center justify-center h-9 gap-2 px-4 sm:px-5 text-sm font-medium tracking-wide transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-white text-neutral-700 border border-neutral-300 hover:bg-neutral-50 focus:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost-icon {
+    @apply inline-flex items-center justify-center h-9 w-9 text-sm font-medium tracking-wide transition duration-300 rounded focus-visible:outline-none whitespace-nowrap text-neutral-700 hover:bg-neutral-100 focus:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
   .btn-group {
     @apply inline-flex overflow-hidden divide-x rounded divide-neutral-100;
   }
