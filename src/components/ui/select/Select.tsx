@@ -12,7 +12,6 @@ interface SelectProps {
 	value: string;
 	onChange: (value: string) => void;
 	options: SelectOption[];
-	placeholder?: string;
 	label?: string;
 	id?: string;
 	name?: string;
@@ -23,7 +22,6 @@ const Select: FC<SelectProps> = ({
 	value,
 	onChange,
 	options,
-	placeholder = 'Select an option',
 	label,
 	id,
 	name,
@@ -52,65 +50,62 @@ const Select: FC<SelectProps> = ({
 	const selectedOption = options.find((opt) => opt.value === value);
 
 	return (
-		<div className={`select-container ${className}`} ref={selectRef}>
-			<button
-				type="button"
-				id={id}
-				name={name}
-				onClick={() => setIsOpen(!isOpen)}
-				onKeyDown={(e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						e.preventDefault();
-						setIsOpen(!isOpen);
-					}
-				}}
-				aria-expanded={isOpen}
-				aria-label={label || placeholder}
-				className={`select-button ${
-					isOpen ? 'border-blue-500' : 'border-slate-200'
-				} ${value ? 'text-slate-700' : 'text-slate-500'}`}
-			>
-				<div className="select-content">
-					<span>{selectedOption ? selectedOption.label : placeholder}</span>
-					<ChevronDown className={`select-icon ${isOpen ? 'rotate-180' : ''}`} />
-				</div>
-			</button>
-			
+		<div className={`select-container ${className}`}>
 			{label && (
-				<span
-					className={`select-label ${
-						isOpen ? 'text-blue-500' : 'text-slate-400'
-					} ${value || isOpen ? '' : 'opacity-0'}`}
-				>
+				<label className="select-label">
 					{label}
-				</span>
+				</label>
 			)}
+			<div ref={selectRef} className="relative">
+				<button
+					type="button"
+					id={id}
+					name={name}
+					onClick={() => setIsOpen(!isOpen)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter' || e.key === ' ') {
+							e.preventDefault();
+							setIsOpen(!isOpen);
+						}
+					}}
+					aria-expanded={isOpen}
+					aria-label={label}
+					className={`select-button ${
+						isOpen ? 'border-blue-500' : 'border-slate-200'
+					} ${value ? 'text-slate-700' : 'text-slate-500'}`}
+				>
+					<div className="select-content">
+						<span>{selectedOption ? selectedOption.label : 'Select an option'}</span>
+						<ChevronDown className={`select-icon ${isOpen ? 'rotate-180' : ''}`} />
+					</div>
+				</button>
 
-			{/* Dropdown Options */}
-			{isOpen && (
-				<div className="select-dropdown">
-					{options.map((option) => (
-						<button
-							key={option.value}
-							type="button"
-							onClick={() => handleSelect(option.value)}
-							onKeyDown={(e) => {
-								if (e.key === 'Enter' || e.key === ' ') {
-									e.preventDefault();
-									handleSelect(option.value);
-								}
-							}}
-							className={`select-option ${
-								value === option.value
-									? 'bg-blue-50 text-blue-600'
-									: 'text-slate-700'
-							}`}
-						>
-							{option.label}
-						</button>
-					))}
-				</div>
-			)}
+				{/* Dropdown Options */}
+				{isOpen && (
+					<div className="select-dropdown">
+						{options.map((option) => (
+							<button
+								key={option.value}
+								type="button"
+								onClick={() => handleSelect(option.value)}
+								onKeyDown={(e) => {
+									if (e.key === 'Enter' || e.key === ' ') {
+										e.preventDefault();
+										handleSelect(option.value);
+									}
+								}}
+								className={`select-option ${
+									value === option.value
+										? 'bg-blue-50 text-blue-600'
+										: 'text-slate-700'
+								}`}
+							>
+								{option.label}
+							</button>
+						))}
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };

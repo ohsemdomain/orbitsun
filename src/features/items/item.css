@@ -84,7 +84,7 @@
   }
 
   .form-row {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mt-4;
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 mt-6;
   }
 
   .form-checkbox-group {

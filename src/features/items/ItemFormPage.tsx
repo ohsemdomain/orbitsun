@@ -143,7 +143,6 @@ const ItemFormPage: FC = () => {
 							value={formData.category}
 							onChange={handleCategoryChange}
 							options={categoryOptions}
-							placeholder="Select category"
 							label="Category"
 						/>
 
@@ -155,7 +154,6 @@ const ItemFormPage: FC = () => {
 								value={formData.status}
 								onChange={handleStatusChange}
 								options={statusOptions}
-								placeholder="Select status"
 								label="Status"
 							/>
 						)}

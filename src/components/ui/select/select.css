@@ -4,12 +4,12 @@
 
   /* Select Container */
   .select-container {
-    @apply relative;
+    @apply flex flex-col gap-1;
   }
 
   /* Select Button */
   .select-button {
-    @apply relative h-10 w-full rounded border px-4 text-sm cursor-pointer transition-all outline-none text-left;
+    @apply h-10 w-full rounded border px-4 text-sm cursor-pointer transition-all outline-none text-left;
   }
 
   /* Select Content */
@@ -24,7 +24,7 @@
 
   /* Select Label */
   .select-label {
-    @apply absolute left-2 -top-2 z-[1] px-2 text-xs transition-all bg-white whitespace-nowrap;
+    @apply text-xs text-slate-400 font-medium;
   }
 
   /* Select Dropdown */
