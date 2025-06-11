@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import type { FC } from 'react';
 import { useState } from 'react';
-import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
+import { Routes, Route, NavLink, Navigate, useLocation } from 'react-router-dom';
 import { SearchInput } from './components/search/SearchInput';
 import DashboardPage from './features/dashboard/DashboardPage';
 import TasksPage from './features/tasks/TasksPage';
@@ -30,6 +30,21 @@ interface NavItem {
 }
 
 const App: FC = () => {
+	const location = useLocation();
+	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+
+	// Check if current route should show the full layout
+	const isAuthRoute = location.pathname === '/signin';
+
+	// If it's an auth route, render only the auth component
+	if (isAuthRoute) {
+		return (
+			<Routes>
+				<Route path="/signin" element={<SigninPage />} />
+			</Routes>
+		);
+	}
+
 	const navItems: NavItem[] = [
 		{ icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
 		{ icon: AlarmClockCheck, label: 'Tasks', path: '/tasks' },
@@ -39,8 +54,6 @@ const App: FC = () => {
 		{ icon: BanknoteArrowDown, label: 'Purchases', path: '/purchases' },
 		{ icon: Settings, label: 'Settings', path: '/settings' },
 	];
-
-	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
 	const NavContent = () => (
 		<>
@@ -140,7 +153,7 @@ const App: FC = () => {
 						<button
 							type="button"
 							onClick={() => {
-								console.log('Logging out...');
+								console.log('Signing out...');
 							}}
 							className="inline-flex items-center justify-center h-8 gap-2 px-6 text-sm font-medium tracking-wide transition duration-300 border rounded focus-visible:outline-none whitespace-nowrap border-primary-500 text-primary-500 focus:border-primary-700 focus:text-primary-700 disabled:cursor-not-allowed disabled:border-primary-300 disabled:text-primary-300 disabled:shadow-none"
 						>
@@ -154,7 +167,6 @@ const App: FC = () => {
 					<div className="h-full">
 						<Routes>
 							<Route path="/" element={<Navigate to="/dashboard" replace />} />
-							<Route path="/signin" element={<SigninPage />} />
 							<Route path="/dashboard" element={<DashboardPage />} />
 							<Route path="/tasks" element={<TasksPage />} />
 							<Route path="/items" element={<ItemsPage />} />
