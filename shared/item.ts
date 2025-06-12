@@ -35,6 +35,12 @@ export interface ItemFormData {
   item_status: ItemStatus;
 }
 
+// Response types
+export interface ItemListResponse {
+  items: Item[];
+  nextCursor?: string;
+}
+
 // Validation schemas
 export const itemCreateSchema = z.object({
   item_name: z.string().trim().min(1, 'Name is required').max(255),
@@ -54,10 +60,9 @@ export const itemUpdateSchema = z.object({
   item_status: z.nativeEnum(ItemStatus).optional(),
 });
 
+// Updated list schema - simpler
 export const itemListSchema = z.object({
-  page: z.number().int().min(1).default(1),
-  limit: z.number().int().min(1).max(100).default(20),
-  search: z.string().optional(),
-  category: z.nativeEnum(ItemCategory).optional(),
-  status: z.nativeEnum(ItemStatus).optional(),
+  status: z.enum(['all', 'active', 'inactive']).default('active'),
+  cursor: z.string().optional(),
+  limit: z.number().int().min(1).max(50).default(20),
 });

@@ -1,72 +1,75 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import { itemListSchema, type Item } from '@shared/item';
-import type { PaginatedResponse } from '@shared/common';
+import { itemListSchema, type Item, type ItemListResponse } from '@shared/item';
 import { mapRowToItem, mapRowsToItems } from './db-map';
 
 export const itemQueries = {
+  // Main list with lazy loading - for displaying filtered items
   list: publicProcedure
     .input(itemListSchema)
-    .query(async ({ input, ctx }) => {
-      const { page, limit, search, category, status } = input;
-      const offset = (page - 1) * limit;
+    .query(async ({ input, ctx }): Promise<ItemListResponse> => {
+      const { status, cursor, limit } = input;
 
       // Build WHERE clause
       const whereConditions: string[] = [];
       const params: any[] = [];
 
-      if (search) {
-        const escapedSearch = search.replace(/[%_]/g, '\\$&');
-        whereConditions.push('item_name LIKE ?');
-        params.push(`%${escapedSearch}%`);
+      // Status filter
+      if (status === 'active') {
+        whereConditions.push('item_status = 1');
+      } else if (status === 'inactive') {
+        whereConditions.push('item_status = 0');
+      }
+      // 'all' = no status filter
+
+      // Cursor for pagination
+      if (cursor) {
+        whereConditions.push('id > ?');
+        params.push(cursor);
       }
 
-      if (category !== undefined) {
-        whereConditions.push('item_category = ?');
-        params.push(category);
-      }
-
-      if (status !== undefined) {
-        whereConditions.push('item_status = ?');
-        params.push(status);
-      }
-
-      const whereClause = whereConditions.length > 0 
+      const whereClause = whereConditions.length > 0
         ? `WHERE ${whereConditions.join(' AND ')}`
         : '';
 
-      // Get total count
-      const countQuery = `SELECT COUNT(*) as total FROM items ${whereClause}`;
-      const countResult = await ctx.env.DB.prepare(countQuery).bind(...params).first<{ total: number }>();
-      const total = countResult?.total || 0;
-
-      // Get items
-      const itemsQuery = `
+      // Get items + 1 to check if there's more
+      const itemsResult = await ctx.env.DB.prepare(`
         SELECT * FROM items 
         ${whereClause}
-        ORDER BY created_at DESC 
-        LIMIT ? OFFSET ?
-      `;
-      const itemsResult = await ctx.env.DB.prepare(itemsQuery)
-        .bind(...params, limit, offset)
-        .all();
+        ORDER BY id ASC 
+        LIMIT ?
+      `).bind(...params, limit + 1).all();
 
       const items = mapRowsToItems(itemsResult.results);
 
+      // Check if there are more items
+      let nextCursor: string | undefined;
+      if (items.length > limit) {
+        nextCursor = items[limit - 1].id;
+        items.pop(); // Remove the extra item
+      }
+
       return {
-        data: items,
-        pagination: {
-          page,
-          limit,
-          total,
-          totalPages: Math.ceil(total / limit),
-        },
-      } as PaginatedResponse<Item>;
+        items,
+        nextCursor,
+      };
     }),
 
+  // Get all items for search - returns minimal data for performance
+  getAllForSearch: publicProcedure
+    .query(async ({ ctx }): Promise<Item[]> => {
+      const itemsResult = await ctx.env.DB.prepare(`
+        SELECT * FROM items 
+        ORDER BY item_name ASC
+      `).all();
+
+      return mapRowsToItems(itemsResult.results);
+    }),
+
+  // Get single item by ID
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input, ctx }) => {
+    .query(async ({ input, ctx }): Promise<Item> => {
       const item = await ctx.env.DB.prepare(
         'SELECT * FROM items WHERE id = ?'
       ).bind(input.id).first();

@@ -52,7 +52,7 @@ const ItemsPage: FC = () => {
 				<div className="items-header">
 					<div className="items-header-content">
 						<div>
-							<h2>Items</h2>
+							<h2>Active Items</h2>
 						</div>
 						<div>
 							<button
