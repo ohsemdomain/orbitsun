@@ -1,6 +1,6 @@
 // src/components/search/SearchInput.tsx
 import { useRef, useEffect } from 'react';
-import { SearchIcon, XIcon } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useSearch } from './SearchProvider';
 import { useLocation } from 'react-router-dom';
 
@@ -10,8 +10,8 @@ interface SearchInputProps {
 
 export function SearchInput({ className = '' }: SearchInputProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { searchTerm, handleSearch, clearSearch } = useSearch();
 	const location = useLocation();
+	const { searchTerm, handleSearch, clearSearch } = useSearch();
 
 	// Auto-generate placeholder from pathname with proper capitalization
 	const getPlaceholder = () => {
@@ -45,7 +45,7 @@ export function SearchInput({ className = '' }: SearchInputProps) {
 
 	return (
 		<div className={`relative ${className}`}>
-			<SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+			<Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
 
 			<input
 				ref={inputRef}
@@ -60,9 +60,9 @@ export function SearchInput({ className = '' }: SearchInputProps) {
 				<button
 					type="button"
 					onClick={clearSearch}
-					className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+					className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
 				>
-					<XIcon className="h-4 w-4" />
+					<X className="h-4 w-4" />
 				</button>
 			)}
 		</div>

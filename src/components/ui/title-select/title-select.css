@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer components {
+
+  /* Main Container */
+  .title-select {
+    @apply relative inline-block;
+  }
+
+  /* Title Button */
+  .title-select-button {
+    @apply flex items-center gap-2 cursor-pointer border-none bg-transparent p-0 transition-opacity hover:opacity-80;
+  }
+
+  /* Title Text */
+  .title-select-text {
+    @apply text-2xl font-semibold text-slate-900 m-0;
+  }
+
+  /* Chevron Icon */
+  .title-select-icon {
+    @apply w-5 h-5 text-slate-600 transition-transform duration-200;
+  }
+
+  /* Disabled State */
+  .title-select-disabled {
+    @apply cursor-not-allowed opacity-60 hover:opacity-60;
+  }
+
+  /* Dropdown */
+  .title-select-dropdown {
+    @apply absolute top-full left-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-lg z-50 min-w-[180px] py-1;
+  }
+
+  /* Dropdown Option */
+  .title-select-option {
+    @apply w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 transition-colors;
+  }
+
+  /* Active Option */
+  .title-select-option-active {
+    @apply bg-blue-50 text-blue-600 font-medium hover:bg-blue-100;
+  }
+}
