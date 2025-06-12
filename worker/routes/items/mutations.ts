@@ -43,10 +43,6 @@ export const itemMutations = {
         'SELECT * FROM items WHERE id = ?'
       ).bind(id).first();
 
-      if (!createdItem) {
-        throw new Error('Failed to retrieve created item');
-      }
-
       return mapRowToItem(createdItem);
     }),
 
@@ -90,10 +86,6 @@ export const itemMutations = {
       const updatedItem = await ctx.env.DB.prepare(
         'SELECT * FROM items WHERE id = ?'
       ).bind(id).first();
-
-      if (!updatedItem) {
-        throw new Error('Failed to retrieve updated item');
-      }
 
       return mapRowToItem(updatedItem);
     }),

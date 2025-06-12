@@ -37,20 +37,20 @@ export interface ItemFormData {
 
 // Validation schemas
 export const itemCreateSchema = z.object({
-  item_name: z.string().min(1).max(255),
+  item_name: z.string().trim().min(1, 'Name is required').max(255),
   item_category: z.nativeEnum(ItemCategory),
   item_price_cents: z.number().int().min(0),
-  item_description: z.string().nullable().optional(),
-  item_unit_name: z.string().min(1).max(50).nullable().optional(),
+  item_description: z.string().trim().transform(val => val === '' ? null : val).nullable().optional(),
+  item_unit_name: z.string().trim().min(1).max(50).transform(val => val === '' ? null : val).nullable().optional(),
 });
 
 export const itemUpdateSchema = z.object({
   id: z.string(),
-  item_name: z.string().min(1).max(255).optional(),
+  item_name: z.string().trim().min(1).max(255).optional(),
   item_category: z.nativeEnum(ItemCategory).optional(),
   item_price_cents: z.number().int().min(0).optional(),
-  item_description: z.string().nullable().optional(),
-  item_unit_name: z.string().min(1).max(50).nullable().optional(),
+  item_description: z.string().trim().transform(val => val === '' ? null : val).nullable().optional(),
+  item_unit_name: z.string().trim().min(1).max(50).transform(val => val === '' ? null : val).nullable().optional(),
   item_status: z.nativeEnum(ItemStatus).optional(),
 });
 

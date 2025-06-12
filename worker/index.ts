@@ -19,7 +19,7 @@ export default {
         // Serve static assets for everything else
         return env.ASSETS.fetch(request);
     },
-} satisfies ExportedHandler<Env>;
+} as ExportedHandler<Env>;
 
 // Environment interface (add your bindings here if needed)
 interface Env {
