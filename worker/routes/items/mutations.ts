@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
 import { ItemStatus, itemCreateSchema, itemUpdateSchema } from '@shared/item';
 import { generateItemId } from '../../utils/id-gen';
@@ -90,17 +89,4 @@ export const itemMutations = {
       return mapRowToItem(updatedItem);
     }),
 
-  delete: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ input, ctx }) => {
-      const result = await ctx.env.DB.prepare(
-        'DELETE FROM items WHERE id = ?'
-      ).bind(input.id).run();
-
-      if (result.meta.changes === 0) {
-        throw new Error('Item not found');
-      }
-
-      return { success: true };
-    }),
 };

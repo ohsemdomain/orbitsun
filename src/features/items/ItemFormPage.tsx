@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { Input, Textarea, Select } from '../../components/ui';
-import { ItemCategory, ItemStatus, type ItemFormData } from '@shared/item';
+import { ItemCategory, ItemStatus, type ItemFormData, CATEGORY_OPTIONS, STATUS_OPTIONS } from '@shared/item';
 import { priceStringToCents, priceCentsToString } from '@shared/price-utils';
 import { trpc } from '../../trpc';
 import './item.css';
@@ -198,11 +198,7 @@ const ItemFormPage: FC = () => {
 							onChange={(value) =>
 								setFormData((prev) => ({ ...prev, item_category: Number(value) as ItemCategory }))
 							}
-							options={[
-								{ value: ItemCategory.PACKAGING.toString(), label: 'Packaging' },
-								{ value: ItemCategory.LABEL.toString(), label: 'Label' },
-								{ value: ItemCategory.OTHER.toString(), label: 'Other' },
-							]}
+							options={CATEGORY_OPTIONS}
 							label="Category"
 						/>
 
@@ -214,10 +210,7 @@ const ItemFormPage: FC = () => {
 								onChange={(value) =>
 									setFormData((prev) => ({ ...prev, item_status: Number(value) as ItemStatus }))
 								}
-								options={[
-									{ value: ItemStatus.ACTIVE.toString(), label: 'Active' },
-									{ value: ItemStatus.INACTIVE.toString(), label: 'Inactive' },
-								]}
+								options={STATUS_OPTIONS}
 								label="Status"
 							/>
 						)}

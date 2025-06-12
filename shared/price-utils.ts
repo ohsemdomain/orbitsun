@@ -1,5 +1,5 @@
 /**
- * Convert price string (dollars) to cents for database storage
+ * Convert price string (RM) to cents for database storage
  * @example priceStringToCents('25.99') => 2599
  */
 export const priceStringToCents = (price: string): number => {
@@ -16,18 +16,15 @@ export const priceCentsToString = (cents: number): string => {
 };
 
 /**
- * Format cents as currency display
- * @example formatCurrency(2599) => '$25.99'
+ * Format cents as RM currency display
+ * @example formatPriceRM(2599) => 'RM 25.99'
  */
-export const formatCurrency = (cents: number, currency = 'USD'): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
-  }).format(cents / 100);
+export const formatPriceRM = (cents: number): string => {
+  return `RM ${priceCentsToString(cents)}`;
 };
 
 /**
- * Add display price to any object with price in cents
+ * Add RM price display to any object with price in cents
  */
 export const addPriceDisplay = <T extends { [key: string]: any }>(
   item: T,
@@ -36,6 +33,6 @@ export const addPriceDisplay = <T extends { [key: string]: any }>(
   const cents = item[priceField];
   return {
     ...item,
-    price_display: priceCentsToString(cents),
+    price_display: formatPriceRM(cents),
   };
 };

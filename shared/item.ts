@@ -66,3 +66,33 @@ export const itemListSchema = z.object({
   cursor: z.string().optional(),
   limit: z.number().int().min(1).max(50).default(20),
 });
+
+// Utility functions
+export const getCategoryLabel = (category: ItemCategory): string => {
+  switch (category) {
+    case ItemCategory.PACKAGING:
+      return 'Packaging';
+    case ItemCategory.LABEL:
+      return 'Label';
+    case ItemCategory.OTHER:
+      return 'Other';
+    default:
+      return 'Unknown';
+  }
+};
+
+export const getStatusLabel = (status: ItemStatus): string => {
+  return status === ItemStatus.ACTIVE ? 'Active' : 'Inactive';
+};
+
+// Form options
+export const CATEGORY_OPTIONS = [
+  { value: ItemCategory.PACKAGING.toString(), label: 'Packaging' },
+  { value: ItemCategory.LABEL.toString(), label: 'Label' },
+  { value: ItemCategory.OTHER.toString(), label: 'Other' },
+];
+
+export const STATUS_OPTIONS = [
+  { value: ItemStatus.ACTIVE.toString(), label: 'Active' },
+  { value: ItemStatus.INACTIVE.toString(), label: 'Inactive' },
+];
