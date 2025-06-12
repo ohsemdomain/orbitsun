@@ -3,10 +3,11 @@ import { useState, useEffect, useRef } from 'react';
 import { useSearch } from '../../components/search/SearchProvider';
 import { Plus, SquarePen, Tag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ItemCategory, ItemStatus, type Item } from '@shared/item';
+import { ItemCategory } from '@shared/item';
 import { formatCurrency } from '@shared/price-utils';
 import RandomText from '../../components/RandomText';
 import TitleSelect from '../../components/ui/title-select/TitleSelect';
+import { trpc } from '../../trpc';
 import './item.css';
 
 const ItemsPage: FC = () => {
@@ -16,11 +17,6 @@ const ItemsPage: FC = () => {
 
 	// State management
 	const [filter, setFilter] = useState<'all' | 'active' | 'inactive'>('active');
-	const [displayItems, setDisplayItems] = useState<Item[]>([]);
-	const [allItemsCache, setAllItemsCache] = useState<Item[]>([]);
-	const [cursor, setCursor] = useState<string | undefined>();
-	const [loading, setLoading] = useState(false);
-	const [loadingMore, setLoadingMore] = useState(false);
 
 	const filterOptions = [
 		{ value: 'all', label: 'All Items' },
@@ -28,128 +24,45 @@ const ItemsPage: FC = () => {
 		{ value: 'inactive', label: 'Inactive Items' },
 	];
 
-	// Generate fake items data (temporary until tRPC is connected)
-	const generateFakeItems = (): Item[] => {
-		const categories = [ItemCategory.PACKAGING, ItemCategory.LABEL, ItemCategory.OTHER];
-		const statuses = [ItemStatus.ACTIVE, ItemStatus.INACTIVE];
-		const itemNames = [
-			'Premium Box',
-			'Shipping Label',
-			'Storage Container',
-			'Product Tag',
-			'Gift Wrapper',
-			'Safety Label',
-			'Delivery Box',
-			'Return Label',
-		];
-
-		return Array.from({ length: 20 }, (_, i) => ({
-			id: `item-${i + 1}`,
-			item_name: `${itemNames[i % itemNames.length]} ${i + 1}`,
-			item_category: categories[i % categories.length],
-			item_price_cents: Math.floor(Math.random() * 10000) + 500,
-			item_description:
-				i % 3 === 0
-					? `High-quality ${itemNames[i % itemNames.length].toLowerCase()} for professional use`
-					: null,
-			item_unit_name: ['pieces', 'kg', 'liters', 'boxes', 'units'][i % 5],
-			item_status: statuses[i % 4 === 0 ? 1 : 0],
-			created_at: Date.now() - i * 86400000,
-			updated_at: Date.now() - i * 43200000,
-			created_by: 'user-1',
-			updated_by: 'user-1',
-		}));
-	};
-
-	// Cache all items on mount for search functionality
-	useEffect(() => {
-		const initializeCache = async () => {
-			// TODO: Replace with actual tRPC call
-			// const allItems = await trpc.item.getAllForSearch.query();
-			const allItems = generateFakeItems();
-			setAllItemsCache(allItems);
-		};
-		
-		initializeCache();
-	}, []);
-
-	// Load items when filter changes (and not searching)
-	useEffect(() => {
-		if (!searchTerm) {
-			loadItemsWithFilter(filter);
+	// tRPC queries
+	const { 
+		data: itemsData, 
+		isLoading: loading, 
+		isFetchingNextPage: loadingMore,
+		fetchNextPage,
+		hasNextPage
+	} = trpc.item.list.useInfiniteQuery(
+		{ status: filter, limit: 20 },
+		{
+			getNextPageParam: (lastPage) => lastPage.nextCursor,
+			enabled: !searchTerm, // Only fetch when not searching
 		}
-	}, [filter]);
+	);
 
-	// Handle search behavior
-	useEffect(() => {
-		if (searchTerm.trim()) {
-			// Auto-switch to "all" when searching and disable filter
-			const filtered = allItemsCache.filter(item =>
+	const { data: allItemsCache = [] } = trpc.item.getAllForSearch.useQuery(
+		undefined,
+		{
+			staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+		}
+	);
+
+	// Compute display items based on search or tRPC data
+	const displayItems = searchTerm.trim() 
+		? allItemsCache.filter(item =>
 				item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
-			);
-			setDisplayItems(filtered);
-			setCursor(undefined); // Reset cursor for search
-		} else {
-			// Return to "active" filter when search is cleared
-			setFilter('active');
-		}
-	}, [searchTerm, allItemsCache]);
-
-	// Load items with specific filter
-	const loadItemsWithFilter = async (filterStatus: 'all' | 'active' | 'inactive', isLoadMore = false) => {
-		if (isLoadMore) {
-			setLoadingMore(true);
-		} else {
-			setLoading(true);
-			setDisplayItems([]);
-			setCursor(undefined);
-		}
-
-		try {
-			// TODO: Replace with actual tRPC call
-			// const response = await trpc.item.list.query({ 
-			//   status: filterStatus, 
-			//   cursor: isLoadMore ? cursor : undefined 
-			// });
-			
-			// Simulate backend filtering for now
-			const allItems = generateFakeItems();
-			let filteredItems: Item[];
-			
-			if (filterStatus === 'active') {
-				filteredItems = allItems.filter(item => item.item_status === ItemStatus.ACTIVE);
-			} else if (filterStatus === 'inactive') {
-				filteredItems = allItems.filter(item => item.item_status === ItemStatus.INACTIVE);
-			} else {
-				filteredItems = allItems;
-			}
-
-			if (isLoadMore) {
-				setDisplayItems(prev => [...prev, ...filteredItems]);
-			} else {
-				setDisplayItems(filteredItems);
-			}
-
-			// Simulate pagination cursor
-			setCursor(filteredItems.length > 0 ? `cursor-${Date.now()}` : undefined);
-		} catch (error) {
-			console.error('Failed to load items:', error);
-		} finally {
-			setLoading(false);
-			setLoadingMore(false);
-		}
-	};
+			)
+		: itemsData?.pages.flatMap(page => page.items) ?? [];
 
 	// Handle lazy loading on scroll
 	useEffect(() => {
 		const handleScroll = () => {
-			if (!listRef.current || searchTerm || !cursor || loadingMore) return;
+			if (!listRef.current || searchTerm || !hasNextPage || loadingMore) return;
 
 			const { scrollTop, scrollHeight, clientHeight } = listRef.current;
 			const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
 
 			if (distanceFromBottom < 100) {
-				loadItemsWithFilter(filter, true);
+				fetchNextPage();
 			}
 		};
 
@@ -158,8 +71,14 @@ const ItemsPage: FC = () => {
 			listElement.addEventListener('scroll', handleScroll);
 			return () => listElement.removeEventListener('scroll', handleScroll);
 		}
-	}, [filter, cursor, loadingMore, searchTerm]);
+	}, [hasNextPage, loadingMore, searchTerm, fetchNextPage]);
 
+	// Handle search behavior - return to 'active' when search is cleared
+	useEffect(() => {
+		if (!searchTerm.trim()) {
+			setFilter('active');
+		}
+	}, [searchTerm]);
 
 	// Handle filter change
 	const handleFilterChange = (newFilter: string) => {

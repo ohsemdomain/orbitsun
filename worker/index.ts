@@ -21,7 +21,7 @@ export default {
     },
 } as ExportedHandler<Env>;
 
-// Environment interface (add your bindings here if needed)
+// Environment interface
 interface Env {
     ASSETS: Fetcher;
     DB: D1Database;

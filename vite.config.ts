@@ -9,6 +9,9 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), cloudflare()],
   server: {
     port: 5009,
+    watch: {
+      ignored: ['**/.wrangler/**', '**/node_modules/**']
+    }
   },
   build: {
     rollupOptions: {
