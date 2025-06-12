@@ -100,3 +100,9 @@ export const STATUS_OPTIONS = [
   { value: ItemStatus.ACTIVE.toString(), label: 'Active' },
   { value: ItemStatus.INACTIVE.toString(), label: 'Inactive' },
 ];
+
+// Helper function to safely parse string to number with fallback
+export const safeParseInt = (value: string, fallback: number): number => {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isNaN(parsed) ? fallback : parsed;
+};

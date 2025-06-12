@@ -1,26 +1,33 @@
 import type { FC } from 'react';
-import { useState, useEffect, useRef } from 'react';
-import { useSearch } from '../../components/search/SearchProvider';
 import { Plus, SquarePen, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { type Item, getCategoryLabel, getStatusLabel } from '@shared/item';
+import { getCategoryLabel } from '@shared/item';
 import { formatPriceRM } from '@shared/price-utils';
-import { formatDateTime } from '../../utils/formatter';
 import TitleSelect from '../../components/ui/title-select/TitleSelect';
 import Spinner from '../../components/loader/Spinner';
 import { SpinnerIcon } from '../../components/loader/SpinnerIcon';
-import { trpc } from '../../trpc';
+import { useItemsState } from './hooks/useItemsState';
+import ItemDetailView from './components/ItemDetailView';
 import './item.css';
 
 const ItemsPage: FC = () => {
 	const navigate = useNavigate();
-	const listRef = useRef<HTMLDivElement>(null);
-	const { searchTerm } = useSearch();
-
-	// State management
-	const [filter, setFilter] = useState<'all' | 'active' | 'inactive'>('active');
-	const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-	const [showMobileDetail, setShowMobileDetail] = useState(false);
+	
+	// Use custom hook for state management
+	const {
+		filter,
+		selectedItem,
+		showMobileDetail,
+		displayItems,
+		totalCount,
+		loading,
+		loadingMore,
+		searchTerm,
+		listRef,
+		handleFilterChange,
+		handleItemClick,
+		setShowMobileDetail,
+	} = useItemsState();
 
 	const filterOptions = [
 		{ value: 'all', label: 'All Items' },
@@ -28,113 +35,12 @@ const ItemsPage: FC = () => {
 		{ value: 'inactive', label: 'Inactive Items' },
 	];
 
-	// tRPC queries
-	const { 
-		data: itemsData, 
-		isLoading: loading, 
-		isFetchingNextPage: loadingMore,
-		fetchNextPage,
-		hasNextPage
-	} = trpc.item.list.useInfiniteQuery(
-		{ status: filter, limit: 20 },
-		{
-			getNextPageParam: (lastPage) => lastPage.nextCursor,
-			enabled: !searchTerm, // Only fetch when not searching
-		}
-	);
-
-	const { data: allItemsCache = [] } = trpc.item.getAllForSearch.useQuery(
-		undefined,
-		{
-			staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-		}
-	);
-
-
-	// Compute display items based on search or tRPC data
-	const displayItems = searchTerm.trim() 
-		? allItemsCache.filter(item =>
-				item.item_name.toLowerCase().includes(searchTerm.toLowerCase())
-			)
-		: itemsData?.pages.flatMap(page => page.items) ?? [];
-
-	// Calculate total count based on current filter
-	const totalCount = searchTerm.trim() 
-		? displayItems.length
-		: allItemsCache.filter(item => {
-				if (filter === 'all') return true;
-				if (filter === 'active') return item.item_status === 1;
-				if (filter === 'inactive') return item.item_status === 0;
-				return true;
-			}).length;
-
-	// Handle lazy loading on scroll
-	useEffect(() => {
-		const handleScroll = () => {
-			if (!listRef.current || searchTerm || !hasNextPage || loadingMore) return;
-
-			const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-			const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
-
-			if (distanceFromBottom < 100) {
-				fetchNextPage();
-			}
-		};
-
-		const listElement = listRef.current;
-		if (listElement) {
-			listElement.addEventListener('scroll', handleScroll);
-			return () => listElement.removeEventListener('scroll', handleScroll);
-		}
-	}, [hasNextPage, loadingMore, searchTerm, fetchNextPage]);
-
-	// Handle search behavior - return to 'active' when search is cleared
-	useEffect(() => {
-		if (!searchTerm.trim()) {
-			setFilter('active');
-		}
-	}, [searchTerm]);
-
-	// Auto-select first item when items change
-	useEffect(() => {
-		if (displayItems.length > 0 && !selectedItem) {
-			setSelectedItem(displayItems[0]);
-		}
-		// If selected item is no longer in the list, select the first one
-		if (selectedItem && displayItems.length > 0) {
-			const isStillInList = displayItems.some(item => item.id === selectedItem.id);
-			if (!isStillInList) {
-				setSelectedItem(displayItems[0]);
-			}
-		}
-		// Clear selection if no items
-		if (displayItems.length === 0) {
-			setSelectedItem(null);
-		}
-	}, [displayItems, selectedItem]);
-
-	// Handle filter change
-	const handleFilterChange = (newFilter: string) => {
-		if (searchTerm) return; // Don't allow filter change during search
-		setFilter(newFilter as 'all' | 'active' | 'inactive');
-	};
-
-	// Handle item click
-	const handleItemClick = (item: Item) => {
-		setSelectedItem(item);
-		// Show mobile detail panel on mobile
-		setShowMobileDetail(true);
-	};
-
 	// Handle edit button
 	const handleEditItem = () => {
 		if (selectedItem) {
 			navigate(`/items/${selectedItem.id}/edit`);
 		}
 	};
-
-
-
 
 	return (
 		<>
@@ -234,29 +140,15 @@ const ItemsPage: FC = () => {
 					</div>
 				</div>
 				<div className="items-detail-content">
-					{loading && !selectedItem ? (
-						<div className="py-20">
-							<Spinner iconClassName="w-8 h-8 text-slate-400" />
-						</div>
-					) : selectedItem ? (
-						<div style={{ padding: '20px' }}>
-							<p><strong>ID:</strong> {selectedItem.id}</p>
-							<p><strong>Name:</strong> {selectedItem.item_name}</p>
-							<p><strong>Category:</strong> {getCategoryLabel(selectedItem.item_category)}</p>
-							<p><strong>Price:</strong> {formatPriceRM(selectedItem.item_price_cents)}</p>
-							<p><strong>Description:</strong> {selectedItem.item_description || 'No description'}</p>
-							<p><strong>Unit Name:</strong> {selectedItem.item_unit_name || 'No unit specified'}</p>
-							<p><strong>Status:</strong> {getStatusLabel(selectedItem.item_status)}</p>
-							<p><strong>Created At:</strong> {formatDateTime(selectedItem.created_at)}</p>
-							<p><strong>Updated At:</strong> {formatDateTime(selectedItem.updated_at)}</p>
-							<p><strong>Created By:</strong> {selectedItem.created_by}</p>
-							<p><strong>Updated By:</strong> {selectedItem.updated_by}</p>
-						</div>
-					) : displayItems.length === 0 ? (
+					<ItemDetailView 
+						item={selectedItem}
+						isLoading={loading && !selectedItem}
+					/>
+					{displayItems.length === 0 && !loading && (
 						<div style={{ padding: '20px', textAlign: 'center' }}>
 							<p>No items available</p>
 						</div>
-					) : null}
+					)}
 				</div>
 			</div>
 		</div>
@@ -316,29 +208,15 @@ const ItemsPage: FC = () => {
 					
 					{/* Content */}
 					<div className="items-detail-content">
-						{loading && !selectedItem ? (
-							<div className="py-20">
-								<Spinner iconClassName="w-8 h-8 text-slate-400" />
-							</div>
-						) : selectedItem ? (
-							<div style={{ padding: '20px' }}>
-								<p><strong>ID:</strong> {selectedItem.id}</p>
-								<p><strong>Name:</strong> {selectedItem.item_name}</p>
-								<p><strong>Category:</strong> {getCategoryLabel(selectedItem.item_category)}</p>
-								<p><strong>Price:</strong> {formatPriceRM(selectedItem.item_price_cents)}</p>
-								<p><strong>Description:</strong> {selectedItem.item_description || 'No description'}</p>
-								<p><strong>Unit Name:</strong> {selectedItem.item_unit_name || 'No unit specified'}</p>
-								<p><strong>Status:</strong> {getStatusLabel(selectedItem.item_status)}</p>
-								<p><strong>Created At:</strong> {formatDateTime(selectedItem.created_at)}</p>
-								<p><strong>Updated At:</strong> {formatDateTime(selectedItem.updated_at)}</p>
-								<p><strong>Created By:</strong> {selectedItem.created_by}</p>
-								<p><strong>Updated By:</strong> {selectedItem.updated_by}</p>
-							</div>
-						) : displayItems.length === 0 ? (
+						<ItemDetailView 
+							item={selectedItem}
+							isLoading={loading && !selectedItem}
+						/>
+						{displayItems.length === 0 && !loading && (
 							<div style={{ padding: '20px', textAlign: 'center' }}>
 								<p>No items available</p>
 							</div>
-						) : null}
+						)}
 					</div>
 				</div>
 			</div>
