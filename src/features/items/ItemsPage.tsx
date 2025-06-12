@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { Plus, SquarePen, Tag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ItemCategory, ItemStatus, type Item } from '@shared/item';
+import { formatCurrency } from '@shared/price-utils';
 import RandomText from '../../components/RandomText';
 import './item.css';
 
@@ -41,7 +42,7 @@ const ItemsPage: FC = () => {
 	};
 
 	const formatPrice = (cents: number): string => {
-		return `RM ${(cents / 100).toFixed(2)}`;
+		return formatCurrency(cents, 'MYR').replace('MYR', 'RM');
 	};
 
 	return (

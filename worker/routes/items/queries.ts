@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
 import { itemListSchema, type Item } from '@shared/item';
 import type { PaginatedResponse } from '@shared/common';
+import { mapRowToItem, mapRowsToItems } from './db-map';
 
 export const itemQueries = {
   list: publicProcedure
@@ -15,8 +16,9 @@ export const itemQueries = {
       const params: any[] = [];
 
       if (search) {
+        const escapedSearch = search.replace(/[%_]/g, '\\$&');
         whereConditions.push('item_name LIKE ?');
-        params.push(`%${search}%`);
+        params.push(`%${escapedSearch}%`);
       }
 
       if (category !== undefined) {
@@ -49,7 +51,7 @@ export const itemQueries = {
         .bind(...params, limit, offset)
         .all();
 
-      const items = itemsResult.results as unknown as Item[];
+      const items = mapRowsToItems(itemsResult.results);
 
       return {
         data: items,
@@ -73,6 +75,6 @@ export const itemQueries = {
         throw new Error('Item not found');
       }
 
-      return item as unknown as Item;
+      return mapRowToItem(item);
     }),
 };
