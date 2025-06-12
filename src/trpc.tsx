@@ -8,10 +8,10 @@ import type { AppRouter } from '../worker/routes';
 // Create tRPC React hooks
 export const trpc = createTRPCReact<AppRouter>();
 
-// Custom delay link - ALWAYS delay by 1 second
-const delayLink = (delay = 1000) => {
+// Custom delay link - ALWAYS delay to prevent flickering
+const delayLink = (delay = 200) => {
   return () => {
-    return ({ next, op }) => {
+    return ({ next, op }: any) => {
       return observable((observer) => {
         const timer = setTimeout(() => {
           next(op).subscribe(observer);
@@ -37,7 +37,6 @@ export const TRPCProvider: FC<TRPCProviderProps> = ({ children }) => {
 					queries: {
 						staleTime: 60 * 1000, // 1 minute
 						refetchOnWindowFocus: false,
-						keepPreviousData: true, // Prevent flickering
 					},
 					mutations: {
 						// You can add mutation defaults here
@@ -49,7 +48,7 @@ export const TRPCProvider: FC<TRPCProviderProps> = ({ children }) => {
 	const [trpcClient] = useState(() =>
 		trpc.createClient({
 			links: [
-				delayLink(1000), // 1 second delay
+				delayLink(200),
 				httpBatchLink({
 					url: '/trpc',
 				}),
