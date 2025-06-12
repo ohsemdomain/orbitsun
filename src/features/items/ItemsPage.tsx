@@ -58,6 +58,16 @@ const ItemsPage: FC = () => {
 			)
 		: itemsData?.pages.flatMap(page => page.items) ?? [];
 
+	// Calculate total count based on current filter
+	const totalCount = searchTerm.trim() 
+		? displayItems.length
+		: allItemsCache.filter(item => {
+				if (filter === 'all') return true;
+				if (filter === 'active') return item.item_status === 1;
+				if (filter === 'inactive') return item.item_status === 0;
+				return true;
+			}).length;
+
 	// Handle lazy loading on scroll
 	useEffect(() => {
 		const handleScroll = () => {
@@ -141,7 +151,10 @@ const ItemsPage: FC = () => {
 								disabled={!!searchTerm} // Disable when searching
 							/>
 						</div>
-						<div>
+						<div className="flex items-center gap-2">
+							<span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+								Total {totalCount} Rows
+							</span>
 							<button
 								type="button"
 								className="btn-primary-icon"
