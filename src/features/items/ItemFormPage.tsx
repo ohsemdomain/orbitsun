@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { Input, Textarea, Select } from '../../components/ui';
-import { ItemCategory, ItemStatus, type ItemFormData, CATEGORY_OPTIONS, STATUS_OPTIONS } from '@shared/item';
+import { ItemCategory, ItemStatus, type ItemFormData, CATEGORY_OPTIONS, STATUS_OPTIONS, itemCreateSchema, itemUpdateSchema } from '@shared/item';
 import { priceStringToCents, priceCentsToString } from '@shared/price-utils';
+import { formatZodErrors, getFieldError, type FormErrors } from '../../utils/validation';
 import { trpc } from '../../trpc';
 import './item.css';
 
@@ -24,6 +25,7 @@ const ItemFormPage: FC = () => {
 	});
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [errors, setErrors] = useState<FormErrors>({});
 
 	// Get utils for query invalidation
 	const utils = trpc.useUtils();
@@ -82,41 +84,43 @@ const ItemFormPage: FC = () => {
 		
 		if (isSubmitting) return;
 		
-		// Basic validation
-		if (!formData.item_name.trim()) {
-			alert('Item name is required');
-			return;
-		}
-		
-		if (!formData.item_price.trim()) {
-			alert('Price is required');
+		// Clear previous errors
+		setErrors({});
+
+		// Prepare data for validation
+		const priceInCents = priceStringToCents(formData.item_price);
+		const validationData = {
+			item_name: formData.item_name.trim(),
+			item_category: formData.item_category,
+			item_price_cents: priceInCents,
+			item_description: formData.item_description.trim() || undefined,
+			item_unit_name: formData.item_unit_name.trim() || undefined,
+			...(isEditing && { item_status: formData.item_status }),
+		};
+
+		// Validate using shared schema
+		const schema = isEditing ? itemUpdateSchema.omit({ id: true }) : itemCreateSchema;
+		const result = schema.safeParse(validationData);
+
+		if (!result.success) {
+			const formErrors = formatZodErrors(result.error);
+			setErrors(formErrors);
 			return;
 		}
 
 		setIsSubmitting(true);
 
 		try {
-			const priceInCents = priceStringToCents(formData.item_price);
-			
 			if (isEditing && id) {
 				// Update existing item
 				await updateMutation.mutateAsync({
 					id,
-					item_name: formData.item_name.trim(),
-					item_description: formData.item_description.trim() || undefined,
-					item_price_cents: priceInCents,
-					item_category: formData.item_category,
-					item_unit_name: formData.item_unit_name.trim() || undefined,
-					item_status: formData.item_status,
+					...validationData,
 				});
 			} else {
-				// Create new item
+				// Create new item  
 				await createMutation.mutateAsync({
-					item_name: formData.item_name.trim(),
-					item_description: formData.item_description.trim() || undefined,
-					item_price_cents: priceInCents,
-					item_category: formData.item_category,
-					item_unit_name: formData.item_unit_name.trim() || undefined,
+					...validationData,
 				});
 			}
 		} catch (error) {
@@ -157,6 +161,7 @@ const ItemFormPage: FC = () => {
 							value={formData.item_name}
 							onChange={(e) => setFormData((prev) => ({ ...prev, item_name: e.target.value }))}
 							label="Item Name"
+							error={getFieldError(errors, 'item_name')}
 						/>
 
 						<Textarea
@@ -168,6 +173,7 @@ const ItemFormPage: FC = () => {
 							}
 							label="Description"
 							rows={6}
+							error={getFieldError(errors, 'item_description')}
 						/>
 
 						<div className="form-row">
@@ -179,6 +185,7 @@ const ItemFormPage: FC = () => {
 								onChange={(e) => setFormData((prev) => ({ ...prev, item_price: e.target.value }))}
 								label="Price"
 								step="0.01"
+								error={getFieldError(errors, 'item_price_cents')}
 							/>
 
 							<Input
@@ -188,6 +195,7 @@ const ItemFormPage: FC = () => {
 								value={formData.item_unit_name}
 								onChange={(e) => setFormData((prev) => ({ ...prev, item_unit_name: e.target.value }))}
 								label="Unit Name"
+								error={getFieldError(errors, 'item_unit_name')}
 							/>
 						</div>
 
@@ -200,6 +208,7 @@ const ItemFormPage: FC = () => {
 							}
 							options={CATEGORY_OPTIONS}
 							label="Category"
+							error={getFieldError(errors, 'item_category')}
 						/>
 
 						{isEditing && (
@@ -212,6 +221,7 @@ const ItemFormPage: FC = () => {
 								}
 								options={STATUS_OPTIONS}
 								label="Status"
+								error={getFieldError(errors, 'item_status')}
 							/>
 						)}
 					</div>

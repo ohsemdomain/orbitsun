@@ -11,6 +11,7 @@ interface TextareaProps {
 	className?: string;
 	disabled?: boolean;
 	required?: boolean;
+	error?: string;
 }
 
 const Textarea: FC<TextareaProps> = ({
@@ -23,6 +24,7 @@ const Textarea: FC<TextareaProps> = ({
 	className = '',
 	disabled = false,
 	required = false,
+	error,
 }) => {
 	return (
 		<div className={`textarea-group ${className}`}>
@@ -39,8 +41,11 @@ const Textarea: FC<TextareaProps> = ({
 				rows={rows}
 				disabled={disabled}
 				required={required}
-				className="textarea-field"
+				className={`textarea-field ${error ? 'textarea-error' : ''}`}
 			/>
+			{error && (
+				<span className="textarea-error-message">{error}</span>
+			)}
 		</div>
 	);
 };

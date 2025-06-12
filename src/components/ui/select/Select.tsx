@@ -16,6 +16,7 @@ interface SelectProps {
 	id?: string;
 	name?: string;
 	className?: string;
+	error?: string;
 }
 
 const Select: FC<SelectProps> = ({
@@ -26,6 +27,7 @@ const Select: FC<SelectProps> = ({
 	id,
 	name,
 	className = '',
+	error,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const selectRef = useRef<HTMLDivElement>(null);
@@ -106,6 +108,9 @@ const Select: FC<SelectProps> = ({
 					</div>
 				)}
 			</div>
+			{error && (
+				<span className="select-error-message">{error}</span>
+			)}
 		</div>
 	);
 };

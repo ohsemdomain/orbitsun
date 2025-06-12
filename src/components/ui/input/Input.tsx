@@ -12,6 +12,7 @@ interface InputProps {
 	className?: string;
 	disabled?: boolean;
 	required?: boolean;
+	error?: string;
 }
 
 const Input: FC<InputProps> = ({
@@ -25,6 +26,7 @@ const Input: FC<InputProps> = ({
 	className = '',
 	disabled = false,
 	required = false,
+	error,
 }) => {
 	return (
 		<div className={`input-group ${className}`}>
@@ -42,8 +44,11 @@ const Input: FC<InputProps> = ({
 				step={step}
 				disabled={disabled}
 				required={required}
-				className="input-field"
+				className={`input-field ${error ? 'input-error' : ''}`}
 			/>
+			{error && (
+				<span className="input-error-message">{error}</span>
+			)}
 		</div>
 	);
 };

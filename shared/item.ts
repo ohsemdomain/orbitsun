@@ -26,14 +26,18 @@ export interface Item {
   updated_by: string;
 }
 
-export interface ItemFormData {
-  item_name: string;
-  item_category: ItemCategory;
-  item_price: string; // For form input
-  item_description: string;
-  item_unit_name: string;
-  item_status: ItemStatus;
-}
+// Form data derived from Item interface - no duplication!
+export type ItemFormData = Pick<Item, 'item_name' | 'item_category' | 'item_status'> & {
+  item_price: string; // Form uses string input, Item uses number (cents)
+  item_description: string; // Form uses string, Item allows null
+  item_unit_name: string; // Form uses string, Item allows null
+};
+
+// API data types derived from Item interface
+export type ItemCreateData = Pick<Item, 'item_name' | 'item_category' | 'item_price_cents' | 'item_description' | 'item_unit_name'>;
+export type ItemUpdateData = Partial<Pick<Item, 'item_name' | 'item_category' | 'item_price_cents' | 'item_description' | 'item_unit_name' | 'item_status'>> & {
+  id: string;
+};
 
 // Response types
 export interface ItemListResponse {
@@ -41,7 +45,7 @@ export interface ItemListResponse {
   nextCursor?: string;
 }
 
-// Validation schemas
+// Validation schemas 
 export const itemCreateSchema = z.object({
   item_name: z.string().trim().min(1, 'Name is required').max(255),
   item_category: z.nativeEnum(ItemCategory),

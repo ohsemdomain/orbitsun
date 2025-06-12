@@ -5,6 +5,7 @@ import { Plus, SquarePen, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { type Item, getCategoryLabel, getStatusLabel } from '@shared/item';
 import { formatPriceRM } from '@shared/price-utils';
+import { formatDateTime } from '../../utils/formatter';
 import TitleSelect from '../../components/ui/title-select/TitleSelect';
 import Spinner from '../../components/loader/Spinner';
 import { SpinnerIcon } from '../../components/loader/SpinnerIcon';
@@ -233,8 +234,8 @@ const ItemsPage: FC = () => {
 							<p><strong>Description:</strong> {selectedItem.item_description || 'No description'}</p>
 							<p><strong>Unit Name:</strong> {selectedItem.item_unit_name || 'No unit specified'}</p>
 							<p><strong>Status:</strong> {getStatusLabel(selectedItem.item_status)}</p>
-							<p><strong>Created At:</strong> {new Date(selectedItem.created_at * 1000).toLocaleString()}</p>
-							<p><strong>Updated At:</strong> {new Date(selectedItem.updated_at * 1000).toLocaleString()}</p>
+							<p><strong>Created At:</strong> {formatDateTime(selectedItem.created_at)}</p>
+							<p><strong>Updated At:</strong> {formatDateTime(selectedItem.updated_at)}</p>
 							<p><strong>Created By:</strong> {selectedItem.created_by}</p>
 							<p><strong>Updated By:</strong> {selectedItem.updated_by}</p>
 						</div>
@@ -315,8 +316,8 @@ const ItemsPage: FC = () => {
 								<p><strong>Description:</strong> {selectedItem.item_description || 'No description'}</p>
 								<p><strong>Unit Name:</strong> {selectedItem.item_unit_name || 'No unit specified'}</p>
 								<p><strong>Status:</strong> {getStatusLabel(selectedItem.item_status)}</p>
-								<p><strong>Created At:</strong> {new Date(selectedItem.created_at * 1000).toLocaleString()}</p>
-								<p><strong>Updated At:</strong> {new Date(selectedItem.updated_at * 1000).toLocaleString()}</p>
+								<p><strong>Created At:</strong> {formatDateTime(selectedItem.created_at)}</p>
+								<p><strong>Updated At:</strong> {formatDateTime(selectedItem.updated_at)}</p>
 								<p><strong>Created By:</strong> {selectedItem.created_by}</p>
 								<p><strong>Updated By:</strong> {selectedItem.updated_by}</p>
 							</div>
