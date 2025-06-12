@@ -47,7 +47,7 @@ const Input: FC<InputProps> = ({
 				className={`input-field ${error ? 'input-error' : ''}`}
 			/>
 			{error && (
-				<span className="input-error-message">{error}</span>
+				<span className="input-error-message text-xs text-pink-500">{error}</span>
 			)}
 		</div>
 	);

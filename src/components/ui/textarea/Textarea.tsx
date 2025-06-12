@@ -44,7 +44,7 @@ const Textarea: FC<TextareaProps> = ({
 				className={`textarea-field ${error ? 'textarea-error' : ''}`}
 			/>
 			{error && (
-				<span className="textarea-error-message">{error}</span>
+				<span className="textarea-error-message text-xs text-pink-500">{error}</span>
 			)}
 		</div>
 	);

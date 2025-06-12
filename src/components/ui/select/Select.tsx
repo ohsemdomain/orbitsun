@@ -109,7 +109,7 @@ const Select: FC<SelectProps> = ({
 				)}
 			</div>
 			{error && (
-				<span className="select-error-message">{error}</span>
+				<span className="select-error-message text-xs text-pink-500">{error}</span>
 			)}
 		</div>
 	);
