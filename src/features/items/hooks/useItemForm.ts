@@ -28,7 +28,7 @@ export const useItemForm = ({ id, isEditing }: UseItemFormProps) => {
   // Get utils for query invalidation
   const utils = trpc.useUtils();
 
-  // tRPC mutations
+  // Simple create mutation
   const createMutation = trpc.item.create.useMutation({
     onSuccess: () => {
       // Invalidate and refetch item queries
@@ -42,6 +42,7 @@ export const useItemForm = ({ id, isEditing }: UseItemFormProps) => {
     },
   });
 
+  // Simple update mutation
   const updateMutation = trpc.item.update.useMutation({
     onSuccess: () => {
       // Invalidate and refetch item queries
