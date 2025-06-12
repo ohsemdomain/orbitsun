@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import { Input, Textarea, Select } from '../../components/ui';
 import { ItemCategory, ItemStatus, type ItemFormData } from '@shared/item';
+import { priceStringToCents, priceCentsToString } from '@shared/price-utils';
+import { trpc } from '../../trpc';
 import './item.css';
 
 const ItemFormPage: FC = () => {
@@ -21,21 +23,118 @@ const ItemFormPage: FC = () => {
 		item_status: ItemStatus.ACTIVE,
 	});
 
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	// Get utils for query invalidation
+	const utils = trpc.useUtils();
+
+	// tRPC mutations
+	const createMutation = trpc.item.create.useMutation({
+		onSuccess: () => {
+			// Invalidate and refetch item queries
+			utils.item.list.invalidate();
+			utils.item.getAllForSearch.invalidate();
+			navigate('/items');
+		},
+		onError: (error) => {
+			console.error('Failed to create item:', error);
+			alert('Failed to create item. Please try again.');
+		},
+	});
+
+	const updateMutation = trpc.item.update.useMutation({
+		onSuccess: () => {
+			// Invalidate and refetch item queries
+			utils.item.list.invalidate();
+			utils.item.getAllForSearch.invalidate();
+			navigate('/items');
+		},
+		onError: (error) => {
+			console.error('Failed to update item:', error);
+			alert('Failed to update item. Please try again.');
+		},
+	});
+
+	// Get item data when editing
+	const { data: existingItem, isLoading: isLoadingItem } = trpc.item.getById.useQuery(
+		{ id: id! },
+		{
+			enabled: isEditing && Boolean(id),
+		}
+	);
+
 	// Load existing item data when editing
 	useEffect(() => {
-		if (isEditing && id) {
-			// TODO: Replace with actual API call
-			const mockItemData: ItemFormData = {
-				item_name: `Item ${id}`,
-				item_description: `This is the description for item ${id}`,
-				item_price: '29.99',
-				item_category: ItemCategory.PACKAGING,
-				item_unit_name: 'pieces',
-				item_status: ItemStatus.ACTIVE,
-			};
-			setFormData(mockItemData);
+		if (existingItem) {
+			setFormData({
+				item_name: existingItem.item_name,
+				item_description: existingItem.item_description || '',
+				item_price: priceCentsToString(existingItem.item_price_cents),
+				item_category: existingItem.item_category,
+				item_unit_name: existingItem.item_unit_name || '',
+				item_status: existingItem.item_status,
+			});
 		}
-	}, [isEditing, id]);
+	}, [existingItem]);
+
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		
+		if (isSubmitting) return;
+		
+		// Basic validation
+		if (!formData.item_name.trim()) {
+			alert('Item name is required');
+			return;
+		}
+		
+		if (!formData.item_price.trim()) {
+			alert('Price is required');
+			return;
+		}
+
+		setIsSubmitting(true);
+
+		try {
+			const priceInCents = priceStringToCents(formData.item_price);
+			
+			if (isEditing && id) {
+				// Update existing item
+				await updateMutation.mutateAsync({
+					id,
+					item_name: formData.item_name.trim(),
+					item_description: formData.item_description.trim() || undefined,
+					item_price_cents: priceInCents,
+					item_category: formData.item_category,
+					item_unit_name: formData.item_unit_name.trim() || undefined,
+					item_status: formData.item_status,
+				});
+			} else {
+				// Create new item
+				await createMutation.mutateAsync({
+					item_name: formData.item_name.trim(),
+					item_description: formData.item_description.trim() || undefined,
+					item_price_cents: priceInCents,
+					item_category: formData.item_category,
+					item_unit_name: formData.item_unit_name.trim() || undefined,
+				});
+			}
+		} catch (error) {
+			console.error('Form submission error:', error);
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+
+	if (isEditing && isLoadingItem) {
+		return (
+			<div className="forms-container">
+				<div className="flex items-center justify-center py-8">
+					<div className="text-slate-500">Loading item...</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="forms-container">
@@ -49,7 +148,7 @@ const ItemFormPage: FC = () => {
 			</div>
 
 			<div className="forms-content">
-				<form className="forms-form">
+				<form className="forms-form" onSubmit={handleSubmit}>
 					<div className="form-section">
 						<Input
 							id="item_name"
@@ -128,9 +227,18 @@ const ItemFormPage: FC = () => {
 						<button type="button" className="btn-secondary" onClick={() => navigate('/items')}>
 							Cancel
 						</button>
-						<button type="submit" className="btn-primary">
+						<button 
+							type="submit" 
+							className="btn-primary"
+							disabled={isSubmitting}
+						>
 							<Save className="w-4 h-4" />
-							<span>{isEditing ? 'Update Item' : 'Save Item'}</span>
+							<span>
+								{isSubmitting 
+									? (isEditing ? 'Updating...' : 'Saving...') 
+									: (isEditing ? 'Update Item' : 'Save Item')
+								}
+							</span>
 						</button>
 					</div>
 				</form>

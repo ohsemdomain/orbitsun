@@ -24,7 +24,7 @@ export const itemQueries = {
 
       // Cursor for pagination
       if (cursor) {
-        whereConditions.push('id > ?');
+        whereConditions.push('id < ?');
         params.push(cursor);
       }
 
@@ -36,7 +36,7 @@ export const itemQueries = {
       const itemsResult = await ctx.env.DB.prepare(`
         SELECT * FROM items 
         ${whereClause}
-        ORDER BY id ASC 
+        ORDER BY id DESC 
         LIMIT ?
       `).bind(...params, limit + 1).all();
 
