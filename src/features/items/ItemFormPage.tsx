@@ -5,6 +5,7 @@ import { ArrowLeft, Save } from 'lucide-react';
 import { Input, Textarea, Select } from '../../components/ui';
 import { CATEGORY_OPTIONS, STATUS_OPTIONS } from '@shared/item';
 import { getFieldError } from '../../utils/validation';
+import Spinner from '../../components/loader/Spinner';
 import { useItemForm } from './hooks/useItemForm';
 import './item.css';
 
@@ -14,20 +15,14 @@ const ItemFormPage: FC = () => {
 	const isEditing = Boolean(id);
 
 	// Use custom form hook
-	const {
-		formData,
-		isSubmitting,
-		errors,
-		isLoadingItem,
-		handleSubmit,
-		updateFormData,
-	} = useItemForm({ id, isEditing });
+	const { formData, isSubmitting, errors, isLoadingItem, handleSubmit, updateFormData } =
+		useItemForm({ id, isEditing });
 
 	if (isEditing && isLoadingItem) {
 		return (
 			<div className="forms-container">
-				<div className="flex items-center justify-center py-8">
-					<div className="text-slate-500">Loading item...</div>
+				<div className="h-full flex items-center justify-center">
+					<Spinner />
 				</div>
 			</div>
 		);
@@ -117,17 +112,16 @@ const ItemFormPage: FC = () => {
 						<button type="button" className="btn-secondary" onClick={() => navigate('/items')}>
 							Cancel
 						</button>
-						<button 
-							type="submit" 
-							className="btn-primary"
-							disabled={isSubmitting}
-						>
+						<button type="submit" className="btn-primary" disabled={isSubmitting}>
 							<Save className="w-4 h-4" />
 							<span>
-								{isSubmitting 
-									? (isEditing ? 'Updating...' : 'Saving...') 
-									: (isEditing ? 'Update Item' : 'Save Item')
-								}
+								{isSubmitting
+									? isEditing
+										? 'Updating...'
+										: 'Saving...'
+									: isEditing
+										? 'Update Item'
+										: 'Save Item'}
 							</span>
 						</button>
 					</div>

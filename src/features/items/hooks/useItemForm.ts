@@ -12,7 +12,7 @@ interface UseItemFormProps {
 
 export const useItemForm = ({ id, isEditing }: UseItemFormProps) => {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState<ItemFormData>({
     item_name: '',
     item_description: '',
@@ -79,9 +79,9 @@ export const useItemForm = ({ id, isEditing }: UseItemFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isSubmitting) return;
-    
+
     // Clear previous errors
     setErrors({});
 
@@ -131,14 +131,14 @@ export const useItemForm = ({ id, isEditing }: UseItemFormProps) => {
   // Helper to update form data with safe parsing for enums
   const updateFormData = (field: keyof ItemFormData, value: string) => {
     if (field === 'item_category') {
-      setFormData(prev => ({ 
-        ...prev, 
-        [field]: safeParseInt(value, ItemCategory.OTHER) as ItemCategory 
+      setFormData(prev => ({
+        ...prev,
+        [field]: safeParseInt(value, ItemCategory.OTHER) as ItemCategory
       }));
     } else if (field === 'item_status') {
-      setFormData(prev => ({ 
-        ...prev, 
-        [field]: safeParseInt(value, ItemStatus.ACTIVE) as ItemStatus 
+      setFormData(prev => ({
+        ...prev,
+        [field]: safeParseInt(value, ItemStatus.ACTIVE) as ItemStatus
       }));
     } else {
       setFormData(prev => ({ ...prev, [field]: value }));
@@ -151,7 +151,7 @@ export const useItemForm = ({ id, isEditing }: UseItemFormProps) => {
     isSubmitting,
     errors,
     isLoadingItem,
-    
+
     // Actions
     handleSubmit,
     updateFormData,

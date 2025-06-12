@@ -8,7 +8,8 @@ dist-ssr
 *.local
 
 # Wrangler
-.wrangler/
+.wrangler/*
+.wrangler/state/*
 
 # Editor directories and files
 .vscode/*
