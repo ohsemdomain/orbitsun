@@ -4,14 +4,14 @@ import { taskSchema, type Task } from '@shared/task';
 
 export const taskMutations = {
   create: publicProcedure
-    .input(taskSchema.omit({ id: true, createdAt: true, updatedAt: true }))
+    .input(taskSchema)
     .mutation(async ({ input }): Promise<Task> => {
       // TODO: Implement D1 insert
       const newTask: Task = {
         id: crypto.randomUUID(),
         ...input,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: Date.now(),
+        updated_at: Date.now(),
       };
       return newTask;
     }),
@@ -19,7 +19,7 @@ export const taskMutations = {
   update: publicProcedure
     .input(z.object({
       id: z.string(),
-      data: taskSchema.partial().omit({ id: true, createdAt: true }),
+      data: taskSchema.partial(),
     }))
     .mutation(async ({ input: _input }): Promise<Task> => {
       // TODO: Implement D1 update

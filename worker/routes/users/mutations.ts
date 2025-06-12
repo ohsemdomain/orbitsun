@@ -4,14 +4,14 @@ import { userSchema, type User } from '@shared/user';
 
 export const userMutations = {
   create: publicProcedure
-    .input(userSchema.omit({ id: true, createdAt: true, updatedAt: true }))
+    .input(userSchema)
     .mutation(async ({ input }): Promise<User> => {
       // TODO: Implement D1 insert with password hashing
       const newUser: User = {
         id: crypto.randomUUID(),
         ...input,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: Date.now(),
+        updated_at: Date.now(),
       };
       return newUser;
     }),
@@ -19,7 +19,7 @@ export const userMutations = {
   update: publicProcedure
     .input(z.object({
       id: z.string(),
-      data: userSchema.partial().omit({ id: true, createdAt: true, email: true }),
+      data: userSchema.partial(),
     }))
     .mutation(async ({ input: _input }): Promise<User> => {
       // TODO: Implement D1 update

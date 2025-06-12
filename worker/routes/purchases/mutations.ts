@@ -4,14 +4,14 @@ import { purchaseSchema, type Purchase } from '@shared/purchase';
 
 export const purchaseMutations = {
   create: publicProcedure
-    .input(purchaseSchema.omit({ id: true, createdAt: true, updatedAt: true }))
+    .input(purchaseSchema)
     .mutation(async ({ input }): Promise<Purchase> => {
       // TODO: Implement D1 insert
       const newPurchase: Purchase = {
         id: crypto.randomUUID(),
         ...input,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: Date.now(),
+        updated_at: Date.now(),
       };
       return newPurchase;
     }),
@@ -19,7 +19,7 @@ export const purchaseMutations = {
   update: publicProcedure
     .input(z.object({
       id: z.string(),
-      data: purchaseSchema.partial().omit({ id: true, createdAt: true }),
+      data: purchaseSchema.partial(),
     }))
     .mutation(async ({ input: _input }): Promise<Purchase> => {
       // TODO: Implement D1 update

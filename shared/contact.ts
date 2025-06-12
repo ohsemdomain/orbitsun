@@ -1,15 +1,16 @@
 import { z } from 'zod';
 
-export const contactSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  email: z.string().email(),
-  phone: z.string().optional(),
-  company: z.string().optional(),
-  address: z.string().optional(),
-  notes: z.string().optional(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
+export interface Contact {
+  id: string;
+  name: string;
+  email?: string;
+  phone?: string;
+  created_at: number;
+  updated_at: number;
+}
 
-export type Contact = z.infer<typeof contactSchema>;
+export const contactSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email().optional(),
+  phone: z.string().optional(),
+});

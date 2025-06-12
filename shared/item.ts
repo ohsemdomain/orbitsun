@@ -1,4 +1,6 @@
 // shared/item.ts
+import { z } from 'zod';
+
 export enum ItemCategory {
   PACKAGING = 1,
   LABEL = 2,
@@ -16,6 +18,7 @@ export interface Item {
   item_category: ItemCategory;
   item_price_cents: number;
   item_description: string | null;
+  item_unit_name: string | null;
   item_status: ItemStatus;
   created_at: number;
   updated_at: number;
@@ -28,5 +31,33 @@ export interface ItemFormData {
   item_category: ItemCategory;
   item_price: string; // For form input
   item_description: string;
+  item_unit_name: string;
   item_status: ItemStatus;
 }
+
+// Validation schemas
+export const itemCreateSchema = z.object({
+  item_name: z.string().min(1).max(255),
+  item_category: z.nativeEnum(ItemCategory),
+  item_price_cents: z.number().int().min(0),
+  item_description: z.string().nullable().optional(),
+  item_unit_name: z.string().min(1).max(50).nullable().optional(),
+});
+
+export const itemUpdateSchema = z.object({
+  id: z.string(),
+  item_name: z.string().min(1).max(255).optional(),
+  item_category: z.nativeEnum(ItemCategory).optional(),
+  item_price_cents: z.number().int().min(0).optional(),
+  item_description: z.string().nullable().optional(),
+  item_unit_name: z.string().min(1).max(50).nullable().optional(),
+  item_status: z.nativeEnum(ItemStatus).optional(),
+});
+
+export const itemListSchema = z.object({
+  page: z.number().int().min(1).default(1),
+  limit: z.number().int().min(1).max(100).default(20),
+  search: z.string().optional(),
+  category: z.nativeEnum(ItemCategory).optional(),
+  status: z.nativeEnum(ItemStatus).optional(),
+});

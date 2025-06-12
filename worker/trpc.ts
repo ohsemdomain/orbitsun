@@ -1,5 +1,4 @@
 import { initTRPC } from '@trpc/server';
-import type { User } from '@shared/user';
 
 // Environment interface for Cloudflare Workers
 interface Env {
@@ -13,8 +12,6 @@ interface Env {
 export interface Context {
 	env: Env;
 	executionCtx: ExecutionContext;
-	// Add user context later for authentication
-	user?: User;
 }
 
 // Initialize tRPC

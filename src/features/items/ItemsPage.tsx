@@ -20,6 +20,7 @@ const ItemsPage: FC = () => {
 			item_category: categories[i % categories.length],
 			item_price_cents: Math.floor(Math.random() * 10000) + 500, // $5.00 to $100.00
 			item_description: i % 3 === 0 ? `High-quality ${itemNames[i % itemNames.length].toLowerCase()} for professional use` : null,
+			item_unit_name: ['pieces', 'kg', 'liters', 'boxes', 'units'][i % 5],
 			item_status: statuses[i % 4 === 0 ? 1 : 0], // Mostly active, some inactive
 			created_at: Date.now() - (i * 86400000), // Days ago
 			updated_at: Date.now() - (i * 43200000), // Half days ago

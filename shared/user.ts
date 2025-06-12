@@ -1,9 +1,14 @@
 import { z } from 'zod';
 
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export const userSchema = z.object({
-  id: z.string(),
-  name: z.string(),
   email: z.string().email(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  name: z.string().min(1),
 });

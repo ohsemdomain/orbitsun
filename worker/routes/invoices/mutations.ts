@@ -4,14 +4,14 @@ import { invoiceSchema, type Invoice } from '@shared/invoice';
 
 export const invoiceMutations = {
   create: publicProcedure
-    .input(invoiceSchema.omit({ id: true, createdAt: true, updatedAt: true }))
+    .input(invoiceSchema)
     .mutation(async ({ input }): Promise<Invoice> => {
       // TODO: Implement D1 insert
       const newInvoice: Invoice = {
         id: crypto.randomUUID(),
         ...input,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: Date.now(),
+        updated_at: Date.now(),
       };
       return newInvoice;
     }),
@@ -19,7 +19,7 @@ export const invoiceMutations = {
   update: publicProcedure
     .input(z.object({
       id: z.string(),
-      data: invoiceSchema.partial().omit({ id: true, createdAt: true }),
+      data: invoiceSchema.partial(),
     }))
     .mutation(async ({ input: _input }): Promise<Invoice> => {
       // TODO: Implement D1 update

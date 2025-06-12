@@ -1,19 +1,14 @@
 import { z } from 'zod';
 
-export const purchaseSchema = z.object({
-  id: z.string(),
-  purchaseNumber: z.string(),
-  vendorId: z.string(),
-  amount: z.number().positive(),
-  status: z.enum(['ordered', 'received', 'invoiced', 'paid']),
-  orderDate: z.date(),
-  items: z.array(z.object({
-    itemId: z.string(),
-    quantity: z.number().positive(),
-    price: z.number().positive(),
-  })),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
+export interface Purchase {
+  id: string;
+  purchase_number: string;
+  amount_cents: number;
+  created_at: number;
+  updated_at: number;
+}
 
-export type Purchase = z.infer<typeof purchaseSchema>;
+export const purchaseSchema = z.object({
+  purchase_number: z.string().min(1),
+  amount_cents: z.number().int().min(0),
+});

@@ -4,9 +4,10 @@ import type { User } from '@shared/user';
 
 export const authQueries = {
   me: publicProcedure
-    .query(async ({ ctx }): Promise<User | null> => {
+    .query(async (): Promise<User | null> => {
       // TODO: Get current authenticated user from context
-      return ctx.user || null;
+      // TODO: Get current authenticated user from context
+      return null;
     }),
 
   verifyToken: publicProcedure

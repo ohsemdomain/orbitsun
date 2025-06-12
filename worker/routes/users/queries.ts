@@ -39,9 +39,10 @@ export const userQueries = {
     }),
 
   getCurrent: publicProcedure
-    .query(async ({ ctx }): Promise<User | null> => {
+    .query(async (): Promise<User | null> => {
       // TODO: Get current authenticated user
-      return ctx.user || null;
+      // TODO: Get current authenticated user
+      return null;
     }),
 
   getPermissions: publicProcedure

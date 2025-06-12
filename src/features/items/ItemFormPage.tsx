@@ -17,6 +17,7 @@ const ItemFormPage: FC = () => {
 		item_description: '',
 		item_price: '',
 		item_category: ItemCategory.OTHER,
+		item_unit_name: '',
 		item_status: ItemStatus.ACTIVE,
 	});
 
@@ -29,6 +30,7 @@ const ItemFormPage: FC = () => {
 				item_description: `This is the description for item ${id}`,
 				item_price: '29.99',
 				item_category: ItemCategory.PACKAGING,
+				item_unit_name: 'pieces',
 				item_status: ItemStatus.ACTIVE,
 			};
 			setFormData(mockItemData);
@@ -80,21 +82,30 @@ const ItemFormPage: FC = () => {
 								step="0.01"
 							/>
 
-							<Select
-								id="item_category"
-								name="item_category"
-								value={formData.item_category.toString()}
-								onChange={(value) =>
-									setFormData((prev) => ({ ...prev, item_category: Number(value) as ItemCategory }))
-								}
-								options={[
-									{ value: ItemCategory.PACKAGING.toString(), label: 'Packaging' },
-									{ value: ItemCategory.LABEL.toString(), label: 'Label' },
-									{ value: ItemCategory.OTHER.toString(), label: 'Other' },
-								]}
-								label="Category"
+							<Input
+								id="item_unit_name"
+								name="item_unit_name"
+								type="text"
+								value={formData.item_unit_name}
+								onChange={(e) => setFormData((prev) => ({ ...prev, item_unit_name: e.target.value }))}
+								label="Unit Name"
 							/>
 						</div>
+
+						<Select
+							id="item_category"
+							name="item_category"
+							value={formData.item_category.toString()}
+							onChange={(value) =>
+								setFormData((prev) => ({ ...prev, item_category: Number(value) as ItemCategory }))
+							}
+							options={[
+								{ value: ItemCategory.PACKAGING.toString(), label: 'Packaging' },
+								{ value: ItemCategory.LABEL.toString(), label: 'Label' },
+								{ value: ItemCategory.OTHER.toString(), label: 'Other' },
+							]}
+							label="Category"
+						/>
 
 						{isEditing && (
 							<Select

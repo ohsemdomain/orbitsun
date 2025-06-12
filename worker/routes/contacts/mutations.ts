@@ -4,14 +4,14 @@ import { contactSchema, type Contact } from '@shared/contact';
 
 export const contactMutations = {
   create: publicProcedure
-    .input(contactSchema.omit({ id: true, createdAt: true, updatedAt: true }))
+    .input(contactSchema)
     .mutation(async ({ input }): Promise<Contact> => {
       // TODO: Implement D1 insert
       const newContact: Contact = {
         id: crypto.randomUUID(),
         ...input,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: Date.now(),
+        updated_at: Date.now(),
       };
       return newContact;
     }),
@@ -19,7 +19,7 @@ export const contactMutations = {
   update: publicProcedure
     .input(z.object({
       id: z.string(),
-      data: contactSchema.partial().omit({ id: true, createdAt: true }),
+      data: contactSchema.partial(),
     }))
     .mutation(async ({ input: _input }): Promise<Contact> => {
       // TODO: Implement D1 update

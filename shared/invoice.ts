@@ -1,19 +1,14 @@
 import { z } from 'zod';
 
-export const invoiceSchema = z.object({
-  id: z.string(),
-  invoiceNumber: z.string(),
-  contactId: z.string(),
-  amount: z.number().positive(),
-  status: z.enum(['draft', 'sent', 'paid', 'overdue']),
-  dueDate: z.date(),
-  items: z.array(z.object({
-    itemId: z.string(),
-    quantity: z.number().positive(),
-    price: z.number().positive(),
-  })),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
+export interface Invoice {
+  id: string;
+  invoice_number: string;
+  amount_cents: number;
+  created_at: number;
+  updated_at: number;
+}
 
-export type Invoice = z.infer<typeof invoiceSchema>;
+export const invoiceSchema = z.object({
+  invoice_number: z.string().min(1),
+  amount_cents: z.number().int().min(0),
+});
