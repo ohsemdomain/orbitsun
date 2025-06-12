@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSearch } from '../../../components/search/SearchProvider';
 import type { Item } from '@shared/item';
+import { ItemStatus } from '@shared/item';
 import { trpc } from '../../../trpc';
 
 export const useItemsState = () => {
@@ -46,8 +47,8 @@ export const useItemsState = () => {
     ? displayItems.length
     : allItemsCache.filter(item => {
         if (filter === 'all') return true;
-        if (filter === 'active') return item.item_status === 1;
-        if (filter === 'inactive') return item.item_status === 0;
+        if (filter === 'active') return item.item_status === ItemStatus.ACTIVE;
+        if (filter === 'inactive') return item.item_status === ItemStatus.INACTIVE;
         return true;
       }).length;
 

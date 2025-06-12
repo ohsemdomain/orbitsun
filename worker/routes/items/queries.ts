@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { publicProcedure } from '../../trpc';
-import { itemListSchema, type Item, type ItemListResponse } from '@shared/item';
+import { itemListSchema, type Item, type ItemListResponse, ItemStatus } from '@shared/item';
 import { mapRowToItem, mapRowsToItems } from './db-map';
 
 export const itemQueries = {
@@ -16,9 +16,11 @@ export const itemQueries = {
 
       // Status filter
       if (status === 'active') {
-        whereConditions.push('item_status = 1');
+        whereConditions.push('item_status = ?');
+        params.push(ItemStatus.ACTIVE);
       } else if (status === 'inactive') {
-        whereConditions.push('item_status = 0');
+        whereConditions.push('item_status = ?');
+        params.push(ItemStatus.INACTIVE);
       }
       // 'all' = no status filter
 

@@ -144,11 +144,6 @@ const ItemsPage: FC = () => {
 						item={selectedItem}
 						isLoading={loading && !selectedItem}
 					/>
-					{displayItems.length === 0 && !loading && (
-						<div style={{ padding: '20px', textAlign: 'center' }}>
-							<p>No items available</p>
-						</div>
-					)}
 				</div>
 			</div>
 		</div>
@@ -212,11 +207,6 @@ const ItemsPage: FC = () => {
 							item={selectedItem}
 							isLoading={loading && !selectedItem}
 						/>
-						{displayItems.length === 0 && !loading && (
-							<div style={{ padding: '20px', textAlign: 'center' }}>
-								<p>No items available</p>
-							</div>
-						)}
 					</div>
 				</div>
 			</div>
